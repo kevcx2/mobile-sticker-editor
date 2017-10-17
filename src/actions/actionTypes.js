@@ -1,0 +1,5 @@
+export const GET_FILTER_JSON = 'GET_FILTER_JSON';
+
+export const UPDATE_FILTER = 'UPDATE_FILTER';
+
+export const ADD_STICKER = 'ADD_STICKER'

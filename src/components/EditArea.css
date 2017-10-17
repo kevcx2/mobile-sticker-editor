@@ -1,0 +1,30 @@
+.EditArea {
+  position: relative;
+  background-color: aliceblue;
+}
+
+.EditArea-phone_shape {
+  height: auto;
+  width: 275px;
+}
+
+.EditArea-canvas_container {
+  border: 1px solid black;
+  display:inline-block;
+/*  position: absolute;
+  top: 82px;
+  left: 20px;*/
+}
+
+.EditArea-context_menu {
+  position: absolute;
+  background-color: green;
+}
+
+.show {
+  visibility: initial;
+}
+
+.hide {
+  visibility: hidden;
+}
