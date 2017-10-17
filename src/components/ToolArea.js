@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { addStickerToCanvas } from '../canvas';
+
 import sticker1 from '../img/1f60b.svg';
 import sticker2 from '../img/1f60c.svg';
 import sticker3 from '../img/1f60d.svg';
@@ -9,11 +11,11 @@ import sticker5 from '../img/1f60f.svg';
 import './ToolArea.css';
 
 const TEST_STICKERS = {
-  '1': sticker1,
-  '2': sticker2,
-  '3': sticker3,
-  '4': sticker4,
-  '5': sticker5,
+  1: sticker1,
+  2: sticker2,
+  3: sticker3,
+  4: sticker4,
+  5: sticker5,
 };
 
 class ToolArea extends Component {
@@ -37,7 +39,7 @@ class ToolArea extends Component {
   // }
 
   onAddSticker(buttonName, evt) {
-    this.props.onAddSticker(buttonName, evt.target);
+    addStickerToCanvas(evt.target);
   }
 
   render() {
@@ -47,10 +49,12 @@ class ToolArea extends Component {
           const buttonImgSrc = this.state.buttons[buttonName];
           return (
             <button className="ToolArea-sticker_button" key={buttonName}>
-              <img onClick={(evt) => this.onAddSticker(buttonName, evt)}
-                   width={50}
-                   height={50}
-                   src={buttonImgSrc} />
+              <img
+                onClick={evt => this.onAddSticker(buttonName, evt)}
+                width={50}
+                height={50}
+                src={buttonImgSrc}
+              />
             </button>
           );
         })}

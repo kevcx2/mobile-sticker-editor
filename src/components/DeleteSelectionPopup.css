@@ -1,0 +1,12 @@
+.DeleteSelectionPopup {
+  position: absolute;
+  background-color: red;
+}
+
+.DeleteSelectionPopup-show {
+  visibility: initial;
+}
+
+.DeleteSelectionPopup-hide {
+  visibility: hidden;
+}
