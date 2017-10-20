@@ -5,6 +5,7 @@
   "dependencies": {
     "fabric": "^1.7.19",
     "react": "^16.0.0",
+    "react-color": "^2.13.8",
     "react-dom": "^16.0.0",
     "react-scripts": "1.0.14"
   },

@@ -17,7 +17,6 @@ class EditArea extends Component {
 
   onUpdateCanvasJSON = () => {
     this.setCanvasZoom();
-    this.forceUpdate();
   }
 
   getCanvasSizing() {

@@ -1,0 +1,24 @@
+.ShadowTool-color_picker_container {
+  position: relative;
+}
+
+.ShadowTool-color_picker {
+  position: absolute;
+  top: 20px;
+  left: 0;
+}
+
+.ShadowTool-color_preview {
+  width: 20px;
+  height: 20px;
+
+  cursor: pointer;
+}
+
+.ShadowTool-color_picker_cover {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}

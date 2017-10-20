@@ -9,12 +9,6 @@ const POPUP_HEIGHT = 25;
 const POPUP_DISTANCE = 25;
 
 class DeleteSelectionPopup extends Component {
-  constructor(props) {
-    super(props);
-
-    this.setCanvasListeners();
-  }
-
   state = {
     showPopup: false,
     popupStyle: {
@@ -28,6 +22,26 @@ class DeleteSelectionPopup extends Component {
       right: 0,
     },
   };
+
+  componentWillMount() {
+    const canvas = getCanvas();
+    canvas.on('object:modified', this.onObjectSelected);
+    canvas.on('object:selected', this.onObjectSelected);
+    canvas.on('object:moving', this.onObjectMoved);
+    canvas.on('object:rotating', this.hideContextMenu);
+    canvas.on('object:scaling', this.hideContextMenu);
+    canvas.on('selection:cleared', this.onSelectionCleared);
+  }
+
+  componentWillUnmount() {
+    const canvas = getCanvas();
+    canvas.off('object:modified', this.onObjectSelected);
+    canvas.off('object:selected', this.onObjectSelected);
+    canvas.off('object:moving', this.onObjectMoved);
+    canvas.off('object:rotating', this.hideContextMenu);
+    canvas.off('object:scaling', this.hideContextMenu);
+    canvas.off('selection:cleared', this.onSelectionCleared);
+  }
 
   // When an object is selected, show the popup, set its initial
   // position and record the selected object's starting position.
@@ -76,16 +90,6 @@ class DeleteSelectionPopup extends Component {
         top: 0,
       },
     });
-  }
-
-  setCanvasListeners() {
-    const canvas = getCanvas();
-    canvas.on('object:modified', this.onObjectSelected);
-    canvas.on('object:selected', this.onObjectSelected);
-    canvas.on('object:moving', this.onObjectMoved);
-    canvas.on('object:rotating', this.hideContextMenu);
-    canvas.on('object:scaling', this.hideContextMenu);
-    canvas.on('selection:cleared', this.onSelectionCleared);
   }
 
   // Given a rectangle object ({top, left, width, height}), calculate the popup's position.
