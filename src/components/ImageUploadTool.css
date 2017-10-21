@@ -1,0 +1,7 @@
+.ImageUploadTool div.uploadPicturesWrapper {
+  display: none;
+}
+
+.ImageUploadTool .fileContainer {
+ box-shadow: none;
+}

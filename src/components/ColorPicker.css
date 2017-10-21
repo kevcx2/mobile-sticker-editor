@@ -1,0 +1,24 @@
+.ColorPicker-color_picker_container {
+  position: relative;
+}
+
+.ColorPicker-color_picker {
+  position: absolute;
+  top: -238px;
+  left: 13px;
+}
+
+.ColorPicker-color_preview {
+  width: 20px;
+  height: 20px;
+
+  cursor: pointer;
+}
+
+.ColorPicker-color_picker_cover {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}

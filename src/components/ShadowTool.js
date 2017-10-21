@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { ChromePicker } from 'react-color';
 
 import {
   getCanvas,
@@ -7,11 +6,12 @@ import {
   applyShadowToSelection,
   removeShadowFromSelection,
 } from '../canvas';
+import ColorPicker from './ColorPicker';
 
 import './ShadowTool.css';
 
 const SHADOW_DEFAULTS = {
-  color: 'rgba(1,20,30,1)',
+  color: 'rgba(0,0,0,1)',
   offsetX: 0,
   offsetY: 0,
   blur: 5,
@@ -20,6 +20,7 @@ const SHADOW_DEFAULTS = {
 class ShadowTool extends Component {
   state = {
     showColorPicker: false,
+    hasSelection: false,
     selectionHasShadow: false,
     ...SHADOW_DEFAULTS,
   };
@@ -30,8 +31,9 @@ class ShadowTool extends Component {
     canvas.on('selection:cleared', this.clearShadowCheckbox);
   }
 
-  componentDidUpdate() {
-    if (this.state.selectionHasShadow) {
+  componentDidUpdate(prevProps, prevState) {
+    const stateChanged = !(JSON.stringify(this.state) === JSON.stringify(prevState));
+    if (this.state.selectionHasShadow && stateChanged) {
       this.applyShadow();
     }
   }
@@ -50,16 +52,24 @@ class ShadowTool extends Component {
       selectionHasShadow ? currentSelectionShadows[0].offsetX : SHADOW_DEFAULTS.offsetX;
     const offsetY =
       selectionHasShadow ? currentSelectionShadows[0].offsetY : SHADOW_DEFAULTS.offsetY;
+    const color =
+      selectionHasShadow ? currentSelectionShadows[0].color : SHADOW_DEFAULTS.color;
+    const blur =
+      selectionHasShadow ? currentSelectionShadows[0].blur : SHADOW_DEFAULTS.blur;
 
     this.setState({
+      hasSelection: true,
       selectionHasShadow,
+      color,
       offsetX,
       offsetY,
+      blur,
     });
   }
 
   clearShadowCheckbox = () => {
     this.setState({
+      hasSelection: false,
       selectionHasShadow: false,
       ...SHADOW_DEFAULTS,
     });
@@ -74,21 +84,9 @@ class ShadowTool extends Component {
     this.checkSelectionShadow();
   }
 
-  showColorPicker = () => {
-    this.setState({
-      showColorPicker: true,
-    });
-  }
-
-  closeColorPicker = () => {
-    this.setState({
-      showColorPicker: false,
-    });
-  }
-
   onColorChange = (color) => {
     this.setState({
-      color: this.colorObjToString(color),
+      color,
     });
   }
 
@@ -98,29 +96,17 @@ class ShadowTool extends Component {
     });
   }
 
-  applyShadow() {
+  applyShadow = () => {
     applyShadowToSelection({
       offsetX: this.state.offsetX,
       offsetY: this.state.offsetY,
       blur: this.state.blur,
       color: this.state.color,
     });
-  }
 
-  colorObjToString(color) {
-    return `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`;
-  }
-
-  stringToColorObj(colorString) {
-    const colorVals =
-      colorString.substring(colorString.indexOf('(') + 1, colorString.lastIndexOf(')'))
-        .split(/,\s*/);
-    return {
-      r: parseInt(colorVals[0], 10),
-      g: parseInt(colorVals[1], 10),
-      b: parseInt(colorVals[2], 10),
-      a: parseFloat(colorVals[3]),
-    };
+    this.setState({
+      selectionHasShadow: true,
+    });
   }
 
   render() {
@@ -131,23 +117,13 @@ class ShadowTool extends Component {
           type="checkbox"
           checked={this.state.selectionHasShadow}
           onChange={this.onShadowCheckboxChange}
+          disabled={this.state.hasSelection ? '' : 'disabled'}
         />
-        <div className="ShadowTool-color_picker_container">
-          <div
-            className="ShadowTool-color_preview"
-            style={{ backgroundColor: this.state.color }}
-            onClick={this.showColorPicker}
-          />
-          {this.state.showColorPicker ? (
-            <div className="ShadowTool-color_picker">
-              <div className="ShadowTool-color_picker_cover" onClick={this.closeColorPicker} />
-              <ChromePicker
-                color={this.stringToColorObj(this.state.color)}
-                onChangeComplete={this.onColorChange}
-              />
-            </div>) : null
-            }
-        </div>
+        <ColorPicker
+          color={this.state.color}
+          onOpen={this.applyShadow}
+          onChange={this.onColorChange}
+          disabled={!this.state.hasSelection} />
         <div>X Offset:
           <input
             type="number"

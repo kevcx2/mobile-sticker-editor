@@ -20,30 +20,49 @@ const TEST_STICKERS = {
 
 class StickerTool extends Component {
   state = {
-    buttons: TEST_STICKERS,
+    stickers: TEST_STICKERS,
   };
 
-  onAddSticker(buttonName, evt) {
+  onAddSticker(stickerName, evt) {
     addStickerToCanvas(evt.target);
+  }
+
+  renderCustomStickers() {
+    if (this.props.customStickers.length < 1) return null;
+    return this.props.customStickers.map((stickerSrc, idx) => {
+      const stickerName = `custom-sticker-${idx}`;
+      return (
+        <button className="StickerTool-button" key={stickerName}>
+          <img
+            onClick={evt => this.onAddSticker(stickerName, evt)}
+            width={50}
+            height={50}
+            src={stickerSrc}
+            alt="sticker"
+          />
+        </button>
+      );
+    });
   }
 
   render() {
     return (
       <div className="StickerTool">
-        {Object.keys(this.state.buttons).map((buttonName) => {
-          const buttonImgSrc = this.state.buttons[buttonName];
+        {Object.keys(this.state.stickers).map((stickerName) => {
+          const stickerSrc = this.state.stickers[stickerName];
           return (
-            <button className="StickerTool-button" key={buttonName}>
+            <button className="StickerTool-button" key={stickerName}>
               <img
-                onClick={evt => this.onAddSticker(buttonName, evt)}
+                onClick={evt => this.onAddSticker(stickerName, evt)}
                 width={50}
                 height={50}
-                src={buttonImgSrc}
+                src={stickerSrc}
                 alt="sticker"
               />
             </button>
           );
         })}
+        {this.renderCustomStickers()}
       </div>
     );
   }

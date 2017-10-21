@@ -68,8 +68,10 @@ class DeleteSelectionPopup extends Component {
   // delta to the starting top-left coordinate provided by the object's bounding rect.
   onObjectMoved = (evt) => {
     const selectedRect = evt.target.getBoundingRect();
-    const leftPosDelta = evt.target.left - this.state.selectionStartPosition.left;
-    const topPosDelta = evt.target.top - this.state.selectionStartPosition.top;
+    const leftPosDelta =
+      (evt.target.left - this.state.selectionStartPosition.left) * this.props.scaleRatio;
+    const topPosDelta =
+      (evt.target.top - this.state.selectionStartPosition.top) * this.props.scaleRatio;
 
     selectedRect.left += leftPosDelta;
     selectedRect.top += topPosDelta;

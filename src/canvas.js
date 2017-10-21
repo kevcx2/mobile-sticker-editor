@@ -15,6 +15,10 @@ export const setFabricCanvas = (fabricCanvas) => {
   canvas = fabricCanvas;
 
   canvasInitializedCallbacks.forEach(callback => callback());
+  canvas.on('object:selected', (evt) => {
+    evt.target.centeredRotation = true;
+    evt.target.centeredScaling = true;
+  });
   return canvas;
 };
 
