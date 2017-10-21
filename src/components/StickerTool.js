@@ -27,24 +27,6 @@ class StickerTool extends Component {
     addStickerToCanvas(evt.target);
   }
 
-  renderCustomStickers() {
-    if (this.props.customStickers.length < 1) return null;
-    return this.props.customStickers.map((stickerSrc, idx) => {
-      const stickerName = `custom-sticker-${idx}`;
-      return (
-        <button className="StickerTool-button" key={stickerName}>
-          <img
-            onClick={evt => this.onAddSticker(stickerName, evt)}
-            width={50}
-            height={50}
-            src={stickerSrc}
-            alt="sticker"
-          />
-        </button>
-      );
-    });
-  }
-
   render() {
     return (
       <div className="StickerTool">
@@ -62,7 +44,6 @@ class StickerTool extends Component {
             </button>
           );
         })}
-        {this.renderCustomStickers()}
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { getCanvas } from '../canvas';
 import StickerTool from './StickerTool';
@@ -7,30 +7,16 @@ import ImageUploadTool from './ImageUploadTool';
 
 import './ToolArea.css';
 
-class ToolArea extends Component {
-  state = {
-    customStickers: [],
-  }
+const ToolArea = () => {
+  if (!getCanvas()) return null;
 
-  onUploadCustomImage = (dataUrl) => {
-    const customStickerList = this.state.customStickers;
-    customStickerList.push(dataUrl)
-    this.setState({
-      customStickers: customStickerList,
-    });
-  }
-
-  render() {
-    if (!getCanvas()) return null;
-
-    return (
-      <div>
-        <StickerTool customStickers={this.state.customStickers}/>
-        <ShadowTool />
-        <ImageUploadTool onUpload={this.onUploadCustomImage}/>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <StickerTool />
+      <ShadowTool />
+      <ImageUploadTool />
+    </div>
+  );
 };
 
 export default ToolArea;

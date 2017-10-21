@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ImageUploader from 'react-images-upload';
 
+import { addStickerToCanvas } from '../canvas';
+
 import './ImageUploadTool.css';
 
 class ImageUploadTool extends Component {
@@ -9,8 +11,12 @@ class ImageUploadTool extends Component {
 
     reader.onload = (loadEvt) => {
       const dataUrl = loadEvt.target.result;
-      this.props.onUpload(dataUrl);
-    }
+      const uploadImg = document.createElement('img');
+      uploadImg.setAttribute('src', dataUrl);
+      uploadImg.onload = () => {
+        addStickerToCanvas(uploadImg);
+      };
+    };
 
     [...Array(pictureList.length)].forEach((_, idx) => {
       const pictureFile = pictureList[idx];
@@ -25,7 +31,7 @@ class ImageUploadTool extends Component {
           withIcon={false}
           withLabel={false}
           withPreview={false}
-          buttonText='Upload Image'
+          buttonText="Upload Image"
           onChange={this.onUpload}
           imgExtension={['.jpg', '.png']}
           maxFileSize={5242880}

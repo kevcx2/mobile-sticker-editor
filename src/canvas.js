@@ -16,8 +16,8 @@ export const setFabricCanvas = (fabricCanvas) => {
 
   canvasInitializedCallbacks.forEach(callback => callback());
   canvas.on('object:selected', (evt) => {
-    evt.target.centeredRotation = true;
-    evt.target.centeredScaling = true;
+    evt.target.centeredRotation = true;// eslint-disable-line
+    evt.target.centeredScaling = true;// eslint-disable-line
   });
   return canvas;
 };
@@ -37,6 +37,7 @@ export const addStickerToCanvas = (imgEl) => {
   });
 
   stickerImage.scaleToHeight(100);
+
   canvas.add(stickerImage);
   canvas.setActiveObject(stickerImage);
 };

@@ -46,7 +46,12 @@ class EditArea extends Component {
       <div className="EditArea">
         <div className="EditArea-canvas_container">
           <canvas id="filter" width={canvasSizing.width} height={canvasSizing.height} />
-          {getCanvas() ? (<DeleteSelectionPopup scaleRatio={canvasSizing.scaleRatio}/>) : null}
+          {getCanvas() ? (
+            <DeleteSelectionPopup
+              canvasSizing={canvasSizing}
+              scaleRatio={canvasSizing.scaleRatio}
+            />
+          ) : null}
         </div>
       </div>
     );

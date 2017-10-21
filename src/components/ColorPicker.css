@@ -22,3 +22,7 @@
   bottom: 0;
   left: 0;
 }
+
+.ColorPicker-disabled {
+  cursor: default;
+}

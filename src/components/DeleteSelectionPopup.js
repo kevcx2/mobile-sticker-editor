@@ -104,10 +104,27 @@ class DeleteSelectionPopup extends Component {
     this.setState({
       popupStyle: {
         ...this.state.popupStyle,
-        left: newContextMenuPosition.left,
-        top: newContextMenuPosition.top,
+        left: this.keepPositionWithinBounds('left', newContextMenuPosition.left),
+        top: this.keepPositionWithinBounds('top', newContextMenuPosition.top),
       },
     });
+  }
+
+  keepPositionWithinBounds(leftOrTop, value) {
+    if (value < 0) {
+      return 0;
+    } else if (leftOrTop === 'left') {
+      if (value > (this.props.canvasSizing.width - POPUP_WIDTH)) {
+        return this.props.canvasSizing.width - (POPUP_WIDTH);
+      }
+      return value;
+    } else if (leftOrTop === 'top') {
+      if (value > (this.props.canvasSizing.height - POPUP_HEIGHT)) {
+        return this.props.canvasSizing.height - (POPUP_HEIGHT);
+      }
+      return value;
+    }
+    return value;
   }
 
   // For scaling and rotating we just want to hide the popup while maintianing our selection
