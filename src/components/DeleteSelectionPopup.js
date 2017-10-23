@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 import { getCanvas, deleteSelection } from '../canvas';
 
 import './DeleteSelectionPopup.css';
+import trashIcon from '../img/trash.svg';
 
-const POPUP_WIDTH = 25;
-const POPUP_HEIGHT = 25;
-const POPUP_DISTANCE = 25;
+const POPUP_WIDTH = 30;
+const POPUP_HEIGHT = 30;
+const POPUP_DISTANCE = 20;
+const ICON_WIDTH = POPUP_WIDTH * .6;
 
 class DeleteSelectionPopup extends Component {
   state = {
@@ -31,6 +33,8 @@ class DeleteSelectionPopup extends Component {
     canvas.on('object:rotating', this.hideContextMenu);
     canvas.on('object:scaling', this.hideContextMenu);
     canvas.on('selection:cleared', this.onSelectionCleared);
+    canvas.on('text:editing:entered', this.hideContextMenu);
+    canvas.on('text:editing:exited', this.onObjectSelected);
   }
 
   componentWillUnmount() {
@@ -41,6 +45,8 @@ class DeleteSelectionPopup extends Component {
     canvas.off('object:rotating', this.hideContextMenu);
     canvas.off('object:scaling', this.hideContextMenu);
     canvas.off('selection:cleared', this.onSelectionCleared);
+    canvas.off('text:editing:entered', this.hideContextMenu);
+    canvas.off('text:editing:exited', this.onObjectSelected);
   }
 
   // When an object is selected, show the popup, set its initial
@@ -143,7 +149,9 @@ class DeleteSelectionPopup extends Component {
         onClick={deleteSelection}
         className={`DeleteSelectionPopup${visibilityClass}`}
         style={this.state.popupStyle}
-      />
+      >
+        <img width={ICON_WIDTH} height={POPUP_HEIGHT} src={trashIcon} alt="delete"/>
+      </div>
     );
   }
 }

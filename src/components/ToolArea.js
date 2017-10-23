@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { getCanvas } from '../canvas';
+import TextTool from './TextTool';
 import StickerTool from './StickerTool';
 import ShadowTool from './ShadowTool';
 import ImageUploadTool from './ImageUploadTool';
@@ -11,9 +12,10 @@ const ToolArea = () => {
   if (!getCanvas()) return null;
 
   return (
-    <div>
-      <StickerTool />
+    <div className="ToolArea">
+      <TextTool />
       <ShadowTool />
+      <StickerTool />
       <ImageUploadTool />
     </div>
   );

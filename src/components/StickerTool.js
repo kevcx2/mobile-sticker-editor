@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { addStickerToCanvas } from '../canvas';
+import ToolHeader from './ToolHeader';
 
 import './StickerTool.css';
 
@@ -20,30 +21,66 @@ const TEST_STICKERS = {
 
 class StickerTool extends Component {
   state = {
-    stickers: TEST_STICKERS,
+    categories: TEST_STICKERS,
+    stickers: {
+      1: [{id: 1, src: sticker1},{id: 2, src: sticker1},{id: 3, src: sticker1},{id: 4, src: sticker1},{id: 5, src: sticker1},{id: 6, src: sticker1},{id: 7, src: sticker1},{id: 8, src: sticker1},{id: 9, src: sticker1},{id: 10, src: sticker1}],
+      2: [{id: 1, src: sticker2},{id: 2, src: sticker2},{id: 3, src: sticker2},{id: 4, src: sticker2},{id: 5, src: sticker2},{id: 6, src: sticker2},{id: 7, src: sticker2},{id: 8, src: sticker2},{id: 9, src: sticker2},{id: 10, src: sticker2}],
+      3: [{id: 1, src: sticker3},{id: 2, src: sticker3},{id: 3, src: sticker3},{id: 4, src: sticker3},{id: 5, src: sticker3},{id: 6, src: sticker3},{id: 7, src: sticker3},{id: 8, src: sticker3},{id: 9, src: sticker3},{id: 10, src: sticker3}],
+      4: [{id: 1, src: sticker4},{id: 2, src: sticker4},{id: 3, src: sticker4},{id: 4, src: sticker4},{id: 5, src: sticker4},{id: 6, src: sticker4},{id: 7, src: sticker4},{id: 8, src: sticker4},{id: 9, src: sticker4},{id: 10, src: sticker4}],
+      5: [{id: 1, src: sticker5},{id: 2, src: sticker5},{id: 3, src: sticker5},{id: 4, src: sticker5},{id: 5, src: sticker5},{id: 6, src: sticker5},{id: 7, src: sticker5},{id: 8, src: sticker5},{id: 9, src: sticker5},{id: 10, src: sticker5}],
+    },
+    activeCategory: 1,
   };
 
-  onAddSticker(stickerName, evt) {
+  selectStickerCategory = (categoryName) => {
+    this.setState({
+      activeCategory: categoryName,
+    });
+  }
+
+  onAddSticker(evt) {
     addStickerToCanvas(evt.target);
   }
 
   render() {
     return (
       <div className="StickerTool">
-        {Object.keys(this.state.stickers).map((stickerName) => {
-          const stickerSrc = this.state.stickers[stickerName];
-          return (
-            <button className="StickerTool-button" key={stickerName}>
+        <ToolHeader>Add Stickers</ToolHeader>
+        <div className="StickerTool-category_list_wrapper">
+          <div className="StickerTool-category_list">
+            {Object.keys(this.state.categories).map((stickerCategory) => {
+              const stickerSrc = this.state.categories[stickerCategory];
+              return (
+                <img
+                  key={stickerCategory}
+                  className="StickerTool-category_image"
+                  onClick={() => this.selectStickerCategory(stickerCategory)}
+                  width={25}
+                  height={25}
+                  src={stickerSrc}
+                  alt="sticker"
+                />
+              );
+            })}
+          </div>
+        </div>
+        <div className="StickerTool-sticker_list_wrapper">
+        <div className="StickerTool-sticker_list">
+          {this.state.stickers[this.state.activeCategory].map((sticker) => {
+            return (
               <img
-                onClick={evt => this.onAddSticker(stickerName, evt)}
+                key={sticker.id}
+                className="StickerTool-sticker_image"
+                onClick={this.onAddSticker}
                 width={50}
                 height={50}
-                src={stickerSrc}
+                src={sticker.src}
                 alt="sticker"
               />
-            </button>
-          );
-        })}
+            );
+          })}
+        </div>
+        </div>
       </div>
     );
   }

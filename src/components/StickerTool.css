@@ -1,6 +1,44 @@
-.StickerTool-button {
+/*.StickerTool-button {
   -webkit-appearance: none;
   background-color: white;
   padding: 2px;
   margin: 2px;
+}*/
+.StickerTool {
+  width: 100%;
+  height: 25%;
+}
+
+.StickerTool-category_list_wrapper {
+  overflow: auto;
+}
+
+.StickerTool-category_list {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.StickerTool-category_image {
+  box-shadow: 0px 0px 2px 1px rgba(0,0,0,.2);
+  border-radius: 3px;
+  margin: 4px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.StickerTool-category_image:active {
+  background-color: #f3f3f3;
+}
+
+.StickerTool-sticker_list_wrapper {
+  overflow: auto;
+  height: calc(100% - 43px);
+}
+
+.StickerTool-sticker_image {
+  cursor: pointer;
+}
+
+.StickerTool-sticker_image:active {
+  background-color: #f3f3f3;
 }

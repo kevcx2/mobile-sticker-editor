@@ -1,6 +1,8 @@
 .EditArea {
+  float: left;
+  margin: 10px;
   position: relative;
-  background-color: aliceblue;
+  background-color: #f3f3f3;
 }
 
 .EditArea-phone_shape {

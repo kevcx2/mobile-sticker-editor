@@ -41,14 +41,18 @@ class ColorPicker extends Component {
   }
 
   render() {
+    const disabledClass = this.props.disabled ? ' ColorPicker-disabled' : ''
     return (
       <div className="ColorPicker-color_picker_container">
         <div
-          className={
-            `ColorPicker-color_preview${this.props.disabled ? ' ColorPicker-disabled' : ''}`}
-          style={{ backgroundColor: this.props.color }}
+          className={"ColorPicker-color_preview_container" + disabledClass}
           onClick={this.showColorPicker}
-        />
+        >
+          <div
+            className="ColorPicker-color_preview"
+            style={{ backgroundColor: this.props.color }}
+          />
+        </div>
         {this.state.showColorPicker ? (
           <div className="ColorPicker-color_picker">
             <div className="ColorPicker-color_picker_cover" onClick={this.closeColorPicker} />

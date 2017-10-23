@@ -7,6 +7,7 @@ import {
   removeShadowFromSelection,
 } from '../canvas';
 import ColorPicker from './ColorPicker';
+import ToolHeader from './ToolHeader';
 
 import './ShadowTool.css';
 
@@ -19,6 +20,7 @@ const SHADOW_DEFAULTS = {
 
 class ShadowTool extends Component {
   state = {
+    showColorPicker: false,
     hasSelection: false,
     selectionHasShadow: false,
     ...SHADOW_DEFAULTS,
@@ -41,27 +43,6 @@ class ShadowTool extends Component {
     const canvas = getCanvas();
     canvas.off('object:selected', this.checkSelectionShadow);
     canvas.off('selection:cleared', this.clearShadowCheckbox);
-  }
-
-  onShadowCheckboxChange = (evt) => {
-    if (evt.target.checked) {
-      this.applyShadow();
-    } else {
-      removeShadowFromSelection();
-    }
-    this.checkSelectionShadow();
-  }
-
-  onColorChange = (color) => {
-    this.setState({
-      color,
-    });
-  }
-
-  onShadowSettingsChange = (evt) => {
-    this.setState({
-      [evt.target.id]: evt.target.value,
-    });
   }
 
   checkSelectionShadow = () => {
@@ -95,6 +76,27 @@ class ShadowTool extends Component {
     });
   }
 
+  onShadowCheckboxChange = (evt) => {
+    if (evt.target.checked) {
+      this.applyShadow();
+    } else {
+      removeShadowFromSelection();
+    }
+    this.checkSelectionShadow();
+  }
+
+  onColorChange = (color) => {
+    this.setState({
+      color,
+    });
+  }
+
+  onShadowSettingsChange = (evt) => {
+    this.setState({
+      [evt.target.id]: evt.target.value,
+    });
+  }
+
   applyShadow = () => {
     applyShadowToSelection({
       offsetX: this.state.offsetX,
@@ -111,45 +113,60 @@ class ShadowTool extends Component {
   render() {
     return (
       <div>
-        <input
-          name="selectionHasShadow"
-          type="checkbox"
-          checked={this.state.selectionHasShadow}
-          onChange={this.onShadowCheckboxChange}
-          disabled={this.state.hasSelection ? '' : 'disabled'}
-        />
-        <ColorPicker
-          color={this.state.color}
-          onOpen={this.applyShadow}
-          onChange={this.onColorChange}
-          disabled={!this.state.hasSelection}
-        />
-        <div>X Offset:
-          <input
-            type="number"
-            id="offsetX"
-            value={this.state.selectionHasShadow ? this.state.offsetX : 0}
-            onChange={this.onShadowSettingsChange}
-            disabled={this.state.selectionHasShadow ? '' : 'disabled'}
-          />
-        </div>
-        <div>Y Offset:
-          <input
-            type="number"
-            id="offsetY"
-            value={this.state.selectionHasShadow ? this.state.offsetY : 0}
-            onChange={this.onShadowSettingsChange}
-            disabled={this.state.selectionHasShadow ? '' : 'disabled'}
-          />
-        </div>
-        <div>Blur:
-          <input
-            type="number"
-            id="blur"
-            value={this.state.selectionHasShadow ? this.state.blur : 0}
-            onChange={this.onShadowSettingsChange}
-            disabled={this.state.selectionHasShadow ? '' : 'disabled'}
-          />
+        <ToolHeader>Shadow</ToolHeader>
+        <div className="ShadowTool">
+          <div className="ShadowTool-checkbox_container">
+            <input
+              className="ShadowTool-checkbox"
+              name="selectionHasShadow"
+              type="checkbox"
+              checked={this.state.selectionHasShadow}
+              onChange={this.onShadowCheckboxChange}
+              disabled={this.state.hasSelection ? '' : 'disabled'}
+            />
+          </div>
+          <div className="ShadowTool-color_picker_container">
+            <ColorPicker
+              color={this.state.color}
+              onOpen={this.applyShadow}
+              onChange={this.onColorChange}
+              disabled={!this.state.hasSelection} />
+          </div>
+          <div className="ShadowTool-input_group">
+            <div className="ShadowTool-input_container">
+              <input
+                className="ShadowTool-input"
+                type="number"
+                id="offsetX"
+                value={this.state.selectionHasShadow ? this.state.offsetX : 0}
+                onChange={this.onShadowSettingsChange}
+                disabled={this.state.selectionHasShadow ? '' : 'disabled'}
+              />
+              <div className="ShadowTool-input_label">X</div>
+            </div>
+            <div className="ShadowTool-input_container">
+              <input
+                className="ShadowTool-input"
+                type="number"
+                id="offsetY"
+                value={this.state.selectionHasShadow ? this.state.offsetY : 0}
+                onChange={this.onShadowSettingsChange}
+                disabled={this.state.selectionHasShadow ? '' : 'disabled'}
+              />
+              <div className="ShadowTool-input_label">Y</div>
+            </div>
+            <div className="ShadowTool-input_container">
+              <input
+                className="ShadowTool-input"
+                type="number"
+                id="blur"
+                value={this.state.selectionHasShadow ? this.state.blur : 0}
+                onChange={this.onShadowSettingsChange}
+                disabled={this.state.selectionHasShadow ? '' : 'disabled'}
+              />
+              <div className="ShadowTool-input_label">Blur Radius</div>
+            </div>
+          </div>
         </div>
       </div>
     );
