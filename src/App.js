@@ -3,12 +3,11 @@ import React, { Component } from 'react';
 import { onCanvasInitialized } from './canvas';
 import EditArea from './components/EditArea';
 import ToolArea from './components/ToolArea';
-import { sampleFilterJSON } from './filterSamples';
 
 import './App.css';
 
 // const filterSlug = "christmas_family";
-const filterSlug = "christmas_family";
+const filterSlug = 'christmas_family';
 
 
 class App extends Component {

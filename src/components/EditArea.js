@@ -11,10 +11,10 @@ const BASE_CANVAS_HEIGHT = 496;
 
 class EditArea extends Component {
   componentDidMount() {
-    const canvas = setFabricCanvas(new fabric.Canvas('filter'));
+    setFabricCanvas(new fabric.Canvas('filter'));
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (!prevProps.filter && this.props.filter) {
       getCanvas().loadFromJSON(this.props.filter, this.onUpdateCanvasJSON);
     }

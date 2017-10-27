@@ -23,23 +23,23 @@ class StickerTool extends Component {
   state = {
     categories: TEST_STICKERS,
     stickers: {
-      1: [{id: 1, src: sticker1},{id: 2, src: sticker1},{id: 3, src: sticker1},{id: 4, src: sticker1},{id: 5, src: sticker1},{id: 6, src: sticker1},{id: 7, src: sticker1},{id: 8, src: sticker1},{id: 9, src: sticker1},{id: 10, src: sticker1},{id: 11, src: sticker1},{id: 12, src: sticker1},{id: 13, src: sticker1},{id: 14, src: sticker1},{id: 15, src: sticker1},{id: 16, src: sticker1},{id: 17, src: sticker1},{id: 18, src: sticker1},{id: 19, src: sticker1},{id: 20, src: sticker1}],
-      2: [{id: 1, src: sticker2},{id: 2, src: sticker2},{id: 3, src: sticker2},{id: 4, src: sticker2},{id: 5, src: sticker2},{id: 6, src: sticker2},{id: 7, src: sticker2},{id: 8, src: sticker2},{id: 9, src: sticker2},{id: 10, src: sticker2}],
-      3: [{id: 1, src: sticker3},{id: 2, src: sticker3},{id: 3, src: sticker3},{id: 4, src: sticker3},{id: 5, src: sticker3},{id: 6, src: sticker3},{id: 7, src: sticker3},{id: 8, src: sticker3},{id: 9, src: sticker3},{id: 10, src: sticker3}],
-      4: [{id: 1, src: sticker4},{id: 2, src: sticker4},{id: 3, src: sticker4},{id: 4, src: sticker4},{id: 5, src: sticker4},{id: 6, src: sticker4},{id: 7, src: sticker4},{id: 8, src: sticker4},{id: 9, src: sticker4},{id: 10, src: sticker4}],
-      5: [{id: 1, src: sticker5},{id: 2, src: sticker5},{id: 3, src: sticker5},{id: 4, src: sticker5},{id: 5, src: sticker5},{id: 6, src: sticker5},{id: 7, src: sticker5},{id: 8, src: sticker5},{id: 9, src: sticker5},{id: 10, src: sticker5}],
+      1: [{ id: 1, src: sticker1 }, { id: 2, src: sticker1 }, { id: 3, src: sticker1 }, { id: 4, src: sticker1 }, { id: 5, src: sticker1 }, { id: 6, src: sticker1 }, { id: 7, src: sticker1 }, { id: 8, src: sticker1 }, { id: 9, src: sticker1 }, { id: 10, src: sticker1 }, { id: 11, src: sticker1 }, { id: 12, src: sticker1 }, { id: 13, src: sticker1 }, { id: 14, src: sticker1 }, { id: 15, src: sticker1 }, { id: 16, src: sticker1 }, { id: 17, src: sticker1 }, { id: 18, src: sticker1 }, { id: 19, src: sticker1 }, { id: 20, src: sticker1 }],
+      2: [{ id: 1, src: sticker2 }, { id: 2, src: sticker2 }, { id: 3, src: sticker2 }, { id: 4, src: sticker2 }, { id: 5, src: sticker2 }, { id: 6, src: sticker2 }, { id: 7, src: sticker2 }, { id: 8, src: sticker2 }, { id: 9, src: sticker2 }, { id: 10, src: sticker2 }],
+      3: [{ id: 1, src: sticker3 }, { id: 2, src: sticker3 }, { id: 3, src: sticker3 }, { id: 4, src: sticker3 }, { id: 5, src: sticker3 }, { id: 6, src: sticker3 }, { id: 7, src: sticker3 }, { id: 8, src: sticker3 }, { id: 9, src: sticker3 }, { id: 10, src: sticker3 }],
+      4: [{ id: 1, src: sticker4 }, { id: 2, src: sticker4 }, { id: 3, src: sticker4 }, { id: 4, src: sticker4 }, { id: 5, src: sticker4 }, { id: 6, src: sticker4 }, { id: 7, src: sticker4 }, { id: 8, src: sticker4 }, { id: 9, src: sticker4 }, { id: 10, src: sticker4 }],
+      5: [{ id: 1, src: sticker5 }, { id: 2, src: sticker5 }, { id: 3, src: sticker5 }, { id: 4, src: sticker5 }, { id: 5, src: sticker5 }, { id: 6, src: sticker5 }, { id: 7, src: sticker5 }, { id: 8, src: sticker5 }, { id: 9, src: sticker5 }, { id: 10, src: sticker5 }],
     },
     activeCategory: 1,
   };
+
+  onAddSticker(evt) {
+    addStickerToCanvas(evt.target);
+  }
 
   selectStickerCategory = (categoryName) => {
     this.setState({
       activeCategory: categoryName,
     });
-  }
-
-  onAddSticker(evt) {
-    addStickerToCanvas(evt.target);
   }
 
   render() {
@@ -65,9 +65,8 @@ class StickerTool extends Component {
           </div>
         </div>
         <div className="StickerTool-sticker_list_wrapper">
-        <div className="StickerTool-sticker_list">
-          {this.state.stickers[this.state.activeCategory].map((sticker) => {
-            return (
+          <div className="StickerTool-sticker_list">
+            {this.state.stickers[this.state.activeCategory].map(sticker => (
               <img
                 key={sticker.id}
                 className="StickerTool-sticker_image"
@@ -77,9 +76,8 @@ class StickerTool extends Component {
                 src={sticker.src}
                 alt="sticker"
               />
-            );
-          })}
-        </div>
+            ))}
+          </div>
         </div>
       </div>
     );

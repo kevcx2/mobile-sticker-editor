@@ -41,11 +41,11 @@ class ColorPicker extends Component {
   }
 
   render() {
-    const disabledClass = this.props.disabled ? ' ColorPicker-disabled' : ''
+    const disabledClass = this.props.disabled ? ' ColorPicker-disabled' : '';
     return (
       <div className="ColorPicker-color_picker_container">
         <div
-          className={"ColorPicker-color_preview_container" + disabledClass}
+          className={`ColorPicker-color_preview_container${disabledClass}`}
           onClick={this.showColorPicker}
         >
           <div

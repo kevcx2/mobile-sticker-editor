@@ -5,6 +5,7 @@ import {
   getSelectionShadows,
   applyShadowToSelection,
   removeShadowFromSelection,
+  hexToRgbA
 } from '../canvas';
 import ColorPicker from './ColorPicker';
 import ToolHeader from './ToolHeader';
@@ -20,7 +21,6 @@ const SHADOW_DEFAULTS = {
 
 class ShadowTool extends Component {
   state = {
-    showColorPicker: false,
     hasSelection: false,
     selectionHasShadow: false,
     ...SHADOW_DEFAULTS,
@@ -45,37 +45,6 @@ class ShadowTool extends Component {
     canvas.off('selection:cleared', this.clearShadowCheckbox);
   }
 
-  checkSelectionShadow = () => {
-    const currentSelectionShadows = getSelectionShadows();
-
-    const selectionHasShadow = currentSelectionShadows.length > 0;
-    const offsetX =
-      selectionHasShadow ? currentSelectionShadows[0].offsetX : SHADOW_DEFAULTS.offsetX;
-    const offsetY =
-      selectionHasShadow ? currentSelectionShadows[0].offsetY : SHADOW_DEFAULTS.offsetY;
-    const color =
-      selectionHasShadow ? currentSelectionShadows[0].color : SHADOW_DEFAULTS.color;
-    const blur =
-      selectionHasShadow ? currentSelectionShadows[0].blur : SHADOW_DEFAULTS.blur;
-
-    this.setState({
-      hasSelection: true,
-      selectionHasShadow,
-      color,
-      offsetX,
-      offsetY,
-      blur,
-    });
-  }
-
-  clearShadowCheckbox = () => {
-    this.setState({
-      hasSelection: false,
-      selectionHasShadow: false,
-      ...SHADOW_DEFAULTS,
-    });
-  }
-
   onShadowCheckboxChange = (evt) => {
     if (evt.target.checked) {
       this.applyShadow();
@@ -94,6 +63,37 @@ class ShadowTool extends Component {
   onShadowSettingsChange = (evt) => {
     this.setState({
       [evt.target.id]: evt.target.value,
+    });
+  }
+
+  clearShadowCheckbox = () => {
+    this.setState({
+      hasSelection: false,
+      selectionHasShadow: false,
+      ...SHADOW_DEFAULTS,
+    });
+  }
+
+  checkSelectionShadow = () => {
+    const currentSelectionShadows = getSelectionShadows();
+
+    const selectionHasShadow = currentSelectionShadows.length > 0;
+    const offsetX =
+      selectionHasShadow ? currentSelectionShadows[0].offsetX : SHADOW_DEFAULTS.offsetX;
+    const offsetY =
+      selectionHasShadow ? currentSelectionShadows[0].offsetY : SHADOW_DEFAULTS.offsetY;
+    const color =
+      selectionHasShadow ? hexToRgbA(currentSelectionShadows[0].color) : SHADOW_DEFAULTS.color;
+    const blur =
+      selectionHasShadow ? currentSelectionShadows[0].blur : SHADOW_DEFAULTS.blur;
+
+    this.setState({
+      hasSelection: true,
+      selectionHasShadow,
+      color,
+      offsetX,
+      offsetY,
+      blur,
     });
   }
 
@@ -130,7 +130,8 @@ class ShadowTool extends Component {
               color={this.state.color}
               onOpen={this.applyShadow}
               onChange={this.onColorChange}
-              disabled={!this.state.hasSelection} />
+              disabled={!this.state.hasSelection}
+            />
           </div>
           <div className="ShadowTool-input_group">
             <div className="ShadowTool-input_container">

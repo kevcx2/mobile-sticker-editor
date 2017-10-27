@@ -9,7 +9,7 @@ import { addStickerToCanvas } from '../canvas';
 import './ImageUploadTool.css';
 import './EditorButton.css';
 
-const ACCEPTED_FILE_FORMATS = ['.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG',]
+const ACCEPTED_FILE_FORMATS = ['.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG'];
 
 class ImageUploadTool extends Component {
   onUpload = (pictureList) => {
@@ -21,12 +21,12 @@ class ImageUploadTool extends Component {
     // All the timeout nonsense here does is add click to dismiss and a fade out after 5
     // seconds functionality to the error message. We do it in this hacky way due to the
     // limitations of working with a prebuild ImageUploader component.
-    let componentContext = this;
+    const componentContext = this;
     window.setTimeout(() => {
       const errorMessageEls = componentContext.imageUploadEl.querySelectorAll('.errorMessage');
       errorMessageEls.forEach((errorEl) => {
-        errorEl.onclick = () => {
-          errorEl.classList.add('fade-out')
+        errorEl.onclick = () => { // eslint-disable-line
+          errorEl.classList.add('fade-out');
           window.setTimeout(() => {
             if (errorEl) {
               errorEl.parentNode.removeChild(errorEl);
@@ -64,7 +64,7 @@ class ImageUploadTool extends Component {
   render() {
     return (
       <div
-        ref={(imageUploadEl) => {this.imageUploadEl = imageUploadEl}}
+        ref={(imageUploadEl) => { this.imageUploadEl = imageUploadEl; }}
         className="ImageUploadTool"
       >
         <ImageUploader
@@ -72,7 +72,7 @@ class ImageUploadTool extends Component {
           withLabel={false}
           withPreview={false}
           buttonText="+ Add Custom Graphic"
-          onChange={(files) => this.onUpload(files)}
+          onChange={files => this.onUpload(files)}
           imgExtension={ACCEPTED_FILE_FORMATS}
           maxFileSize={5242880}
           buttonClassName="EditorButton"

@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
-import { getCanvas, addTextToCanvas, applyTextStyle } from '../canvas';
+import { getCanvas, addTextToCanvas, applyTextStyle, hexToRgbA } from '../canvas';
 import ColorPicker from './ColorPicker';
 import EditorButton from './EditorButton';
 import AlignmentIcon from './AlignmentIcon';
 import ToolHeader from './ToolHeader';
 
-import 'react-dropdown/style.css';
 import './TextTool.css';
 
 const TEXT_ALIGN_OPTIONS = ['left', 'center', 'right'];
 const FONTS = {
-  'Arial': 'Arial',
+  Arial: 'Arial',
   'Times New Roman': 'Times New Roman',
-  'Courier': 'Courier',
-}
+  Courier: 'Courier',
+};
 const TEXT_DEFAULTS = {
   hasSelection: false,
   color: 'rgba(0,0,0,1)',
@@ -29,24 +29,20 @@ class TextTool extends Component {
   componentWillMount() {
     const canvas = getCanvas();
     canvas.on('text:selected', this.onTextSelected);
-    canvas.on('selection:cleared', this.restoreDefaults)
+    canvas.on('selection:cleared', this.restoreDefaults);
   }
 
   componentWillUnmount() {
     const canvas = getCanvas();
     canvas.off('text:selected', this.onTextSelected);
-    canvas.off('selection:cleared', this.restoreDefaults)
-  }
-
-  restoreDefaults = () => {
-    this.setState(TEXT_DEFAULTS);
+    canvas.off('selection:cleared', this.restoreDefaults);
   }
 
   onTextSelected = (evt) => {
-    // TODO Text color can be hex - need to convert to rgba...
+    // Text color can be hex - converts to rgba if appropriate.
     this.setState({
       hasSelection: true,
-      color: evt.target.fill,
+      color: hexToRgbA(evt.target.fill),
       textAlign: evt.target.textAlign,
       fontFamily: evt.target.fontFamily,
     });
@@ -77,13 +73,15 @@ class TextTool extends Component {
     }));
   }
 
+  restoreDefaults = () => {
+    this.setState(TEXT_DEFAULTS);
+  }
+
   renderFontDropdown() {
-    const dropdownOptions = Object.keys(FONTS).map((fontFamily) => {
-      return {
-        value: fontFamily,
-        label: FONTS[fontFamily],
-      }
-    });
+    const dropdownOptions = Object.keys(FONTS).map(fontFamily => ({
+      value: fontFamily,
+      label: FONTS[fontFamily],
+    }));
 
     const currentSelection = {
       value: this.state.fontFamily || dropdownOptions[0].value,
@@ -107,9 +105,9 @@ class TextTool extends Component {
       <div
         key={option}
         onClick={() => this.onAlignChange(option)}
-        className={"TextTool-align_icon" + (isDisabled ? ' TextTool-align_icon_disabled' : '')}
+        className={`TextTool-align_icon${isDisabled ? ' TextTool-align_icon_disabled' : ''}`}
       >
-        <AlignmentIcon value={option} active={isActive} disabled={isDisabled}/>
+        <AlignmentIcon value={option} active={isActive} disabled={isDisabled} />
       </div>
     );
   }
@@ -124,15 +122,14 @@ class TextTool extends Component {
         {this.renderFontDropdown()}
         <ToolHeader>Text Alignment</ToolHeader>
         <div className="TextTool-align_icon_container">
-          {TEXT_ALIGN_OPTIONS.map((option) => {
-            return this.renderTextAlignOption(option, !this.state.hasSelection);
-          })}
+          {TEXT_ALIGN_OPTIONS.map(
+            option => this.renderTextAlignOption(option, !this.state.hasSelection),
+          )}
         </div>
         <ToolHeader>Text Color</ToolHeader>
         <div className="TextTool-color_container">
           <ColorPicker
             color={this.state.color}
-            onOpen={() => null}
             onChange={this.onColorChange}
             disabled={!this.state.hasSelection}
           />

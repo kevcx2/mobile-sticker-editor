@@ -8,7 +8,7 @@ import trashIcon from '../img/trash.svg';
 const POPUP_WIDTH = 30;
 const POPUP_HEIGHT = 30;
 const POPUP_DISTANCE = 20;
-const ICON_WIDTH = POPUP_WIDTH * .6;
+const ICON_WIDTH = POPUP_WIDTH * 0.6;
 
 class DeleteSelectionPopup extends Component {
   state = {
@@ -150,7 +150,7 @@ class DeleteSelectionPopup extends Component {
         className={`DeleteSelectionPopup${visibilityClass}`}
         style={this.state.popupStyle}
       >
-        <img width={ICON_WIDTH} height={POPUP_HEIGHT} src={trashIcon} alt="delete"/>
+        <img width={ICON_WIDTH} height={POPUP_HEIGHT} src={trashIcon} alt="delete" />
       </div>
     );
   }
