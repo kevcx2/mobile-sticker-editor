@@ -89,7 +89,7 @@ export const addTextToCanvas = (font) => {
 
   const text = new fabric.IText('Click To Edit');
   text.set({
-    left: 30,
+    left: 20,
     top: 100,
     opacity: 0,
     fontFamily: font,

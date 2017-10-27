@@ -6,13 +6,18 @@ import DeleteSelectionPopup from './DeleteSelectionPopup';
 
 import './EditArea.css';
 
-const BASE_CANVAS_WIDTH = 320;
-const BASE_CANVAS_HEIGHT = 568;
+const BASE_CANVAS_WIDTH = 279;
+const BASE_CANVAS_HEIGHT = 496;
 
 class EditArea extends Component {
   componentDidMount() {
     const canvas = setFabricCanvas(new fabric.Canvas('filter'));
-    canvas.loadFromJSON(this.props.filter, this.onUpdateCanvasJSON);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevProps.filter && this.props.filter) {
+      getCanvas().loadFromJSON(this.props.filter, this.onUpdateCanvasJSON);
+    }
   }
 
   onUpdateCanvasJSON = () => {

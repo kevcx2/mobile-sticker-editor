@@ -7,15 +7,41 @@ import { sampleFilterJSON } from './filterSamples';
 
 import './App.css';
 
+// const filterSlug = "christmas_family";
+const filterSlug = "christmas_family";
+
+
 class App extends Component {
   constructor(props) {
     super(props);
     onCanvasInitialized(() => this.forceUpdate());
   }
 
-  state = { width: 320, height: 568 }
+  state = {
+    width: 320,
+    height: 568,
+    filterJSON: undefined,
+  }
+  // 279 x   497   base
+  // 139.5 x 248   //.5x
+  // 418.5 x 745.5 //1.5
+
+  // 320 x 568 base
   // state = { width: 160, height: 284 } //.5x
   // state = {width: 480, height: 852} //1.5x
+
+  componentDidMount() {
+    const parseFilterResponse = (response) => {
+      this.setState({
+        filterJSON: response.design_json,
+      });
+    };
+
+    fetch(`https://www.dev.filterpop.com/api/design/${filterSlug}`, {
+      method: 'get',
+    }).then(response => response.json())
+      .then(json => parseFilterResponse(json));
+  }
 
   render() {
     return (
@@ -24,7 +50,7 @@ class App extends Component {
         <EditArea
           width={this.state.width}
           height={this.state.height}
-          filter={sampleFilterJSON}
+          filter={this.state.filterJSON}
         />
       </div>
     );

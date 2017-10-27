@@ -3,8 +3,9 @@ import React from 'react';
 import './ToolHeader.css';
 
 const ToolHeader = (props) => {
+  const sizeClass = props.size ? (' ToolHeader-' + props.size) : '';
   return (
-    <div className="ToolHeader">{props.children}</div>
+    <div className={"ToolHeader" + sizeClass}>{props.children}</div>
   );
 };
 
