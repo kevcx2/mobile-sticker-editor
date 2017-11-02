@@ -1,5 +1,5 @@
 .TextTool-align_icon_container {
-  margin: -5px 20px 0px 20px;
+  margin: 0px 20px 0px 20px;
 }
 
 .TextTool-align_icon {
@@ -36,7 +36,7 @@
 
 .TextTool-dropdown {
   width: calc(100% - 40px);
-  margin: 0px 20px 5px 20px;
+  margin: 0px 20px 10px 20px;
   font-size: 14px;
 }
 

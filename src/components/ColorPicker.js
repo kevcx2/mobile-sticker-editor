@@ -8,9 +8,22 @@ class ColorPicker extends Component {
     showColorPicker: false,
   }
 
+  componentDidUpdate() {
+    if (this.state.showColorPicker) {
+      const colorPickerBoundingRect =
+        this.colorPicker && this.colorPicker.getBoundingClientRect();
+      if (!colorPickerBoundingRect) return;
+
+      if (colorPickerBoundingRect.top < 0) {
+        const currTop = parseInt(window.getComputedStyle(this.colorPicker).top, 10);
+        this.colorPicker.style.top = `${currTop + (-1 * colorPickerBoundingRect.top)}px`;
+      }
+    }
+  }
+
   showColorPicker = () => {
     if (!this.props.disabled) {
-      this.props.onOpen();
+      this.props.onOpen && this.props.onOpen();
 
       this.setState({
         showColorPicker: true,
@@ -54,7 +67,10 @@ class ColorPicker extends Component {
           />
         </div>
         {this.state.showColorPicker ? (
-          <div className="ColorPicker-color_picker">
+          <div 
+            ref={colorPicker => this.colorPicker = colorPicker}
+            className="ColorPicker-color_picker"
+          >
             <div className="ColorPicker-color_picker_cover" onClick={this.closeColorPicker} />
             <ChromePicker
               color={this.stringToColorObj(this.props.color)}

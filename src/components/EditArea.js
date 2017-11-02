@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { fabric } from 'fabric';
 
-import { setFabricCanvas, getCanvas } from '../canvas';
+import { setFabricCanvas, getCanvas, loadCanvasJson } from '../canvas';
 import DeleteSelectionPopup from './DeleteSelectionPopup';
+import phoneSvg from '../img/phone.svg';
 
 import './EditArea.css';
 
@@ -16,18 +17,32 @@ class EditArea extends Component {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.filter && this.props.filter) {
-      getCanvas().loadFromJSON(this.props.filter, this.onUpdateCanvasJSON);
+      loadCanvasJson(this.props.filter, this.onUpdateCanvasJSON)
     }
   }
 
   onUpdateCanvasJSON = () => {
+
+    getCanvas().getObjects().forEach((obj) => {
+      if (obj.type === 'i-text') {
+        obj.fontSize = obj.fontSize - 1;
+        getCanvas().renderAll();
+        obj.fontSize = obj.fontSize + 1;
+        getCanvas().renderAll();
+        obj.fontSize = obj.fontSize + 1;
+        getCanvas().renderAll();
+      }
+    });
+
     this.setCanvasZoom();
   }
 
   getCanvasSizing() {
+    const canvasWidth = .875 * this.props.width;
+    const canvasHeight = (canvasWidth * BASE_CANVAS_HEIGHT) / BASE_CANVAS_WIDTH;
     const sizingData = {
-      width: this.props.width || BASE_CANVAS_WIDTH,
-      height: this.props.height || BASE_CANVAS_HEIGHT,
+      width: canvasWidth,
+      height: canvasHeight,
     };
 
     const scaleRatio =
@@ -48,7 +63,12 @@ class EditArea extends Component {
   render() {
     const canvasSizing = this.getCanvasSizing();
     return (
-      <div className="EditArea">
+      <div className="EditArea" style={{width: this.props.width}}>
+        <img src={phoneSvg}></img>
+        <div 
+          className="EditArea-canvas_shadow"
+          style={{width: canvasSizing.width, height: canvasSizing.height}}
+        ></div>
         <div className="EditArea-canvas_container">
           <canvas id="filter" width={canvasSizing.width} height={canvasSizing.height} />
           {getCanvas() ? (

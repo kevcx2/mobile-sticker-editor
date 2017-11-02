@@ -16,6 +16,7 @@
   position: absolute;
   top: -244px;
   left: 5px;
+  z-index: 10;
 }
 
 .ColorPicker-color_preview {

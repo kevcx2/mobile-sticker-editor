@@ -79,5 +79,6 @@
 }
 
 .ShadowTool-input_label:last-of-type {
-  font-size: 12px;
+    font-size: 11px;
+    letter-spacing: 1px;
 }

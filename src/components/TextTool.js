@@ -1,21 +1,17 @@
 import React, { Component } from 'react';
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
 
 import { getCanvas, addTextToCanvas, applyTextStyle, hexToRgbA } from '../canvas';
 import ColorPicker from './ColorPicker';
 import EditorButton from './EditorButton';
 import AlignmentIcon from './AlignmentIcon';
 import ToolHeader from './ToolHeader';
+import FontDropdown from './FontDropdown';
+import FONTS from '../fonts/fontList';
 
 import './TextTool.css';
 
 const TEXT_ALIGN_OPTIONS = ['left', 'center', 'right'];
-const FONTS = {
-  Arial: 'Arial',
-  'Times New Roman': 'Times New Roman',
-  Courier: 'Courier',
-};
+
 const TEXT_DEFAULTS = {
   hasSelection: false,
   color: 'rgba(0,0,0,1)',
@@ -64,8 +60,7 @@ class TextTool extends Component {
     }));
   }
 
-  onFontChange = (evt) => {
-    const fontFamily = evt.value;
+  onFontChange = (fontFamily) => {
     this.setState({
       fontFamily,
     }, () => applyTextStyle({
@@ -79,22 +74,25 @@ class TextTool extends Component {
 
   renderFontDropdown() {
     const dropdownOptions = Object.keys(FONTS).map(fontFamily => ({
-      value: fontFamily,
-      label: FONTS[fontFamily],
+      value: FONTS[fontFamily],
+      label: fontFamily,
     }));
+
+    const currentLabel = Object.keys(FONTS).find((key) => {
+      return FONTS[key] === this.state.fontFamily
+    });
 
     const currentSelection = {
       value: this.state.fontFamily || dropdownOptions[0].value,
-      label: FONTS[this.state.fontFamily] || dropdownOptions[0].label,
+      label: currentLabel || dropdownOptions[0].label,
     };
 
     return (
-      <Dropdown
+      <FontDropdown
         options={dropdownOptions}
         onChange={this.onFontChange}
-        value={currentSelection}
+        currentSelection={currentSelection}
         disabled={!this.state.hasSelection}
-        className="TextTool-dropdown"
       />
     );
   }
@@ -120,12 +118,6 @@ class TextTool extends Component {
         </EditorButton>
         <ToolHeader>Typeface</ToolHeader>
         {this.renderFontDropdown()}
-        <ToolHeader>Text Alignment</ToolHeader>
-        <div className="TextTool-align_icon_container">
-          {TEXT_ALIGN_OPTIONS.map(
-            option => this.renderTextAlignOption(option, !this.state.hasSelection),
-          )}
-        </div>
         <ToolHeader>Text Color</ToolHeader>
         <div className="TextTool-color_container">
           <ColorPicker
@@ -140,3 +132,71 @@ class TextTool extends Component {
 }
 
 export default TextTool;
+
+// var fonts = {};
+
+// document.querySelectorAll('.dropdown-menu')[0].querySelectorAll('li').forEach((liEl) => {
+//   var aEl = liEl.querySelector('a');
+//   fonts[aEl.innerText] = aEl.style.fontFamily;te
+// });
+// const FONTS = {
+//   "Aleo-bold": "aleobold",
+//   "Aleo-light": "aleolight",
+//   "Alex Brush": "alex_brushregular",
+//   "Alghifari": "_mj_alghifariregular",
+//   "Antiquabold": "inknut_antiquabold",
+//   "Antiquaregular": "inknut_antiquaregular",
+//   "Atzurbold": "atzurbold",
+//   "Badhead": "badhead",
+//   "Blenny": "blenny",
+//   "Boston Traffic": "boston_trafficregular",
+//   "Brushbear": "swistblnk_duwhoers_brushRg",
+//   "Bukhariscript": "bukhari_script",
+//   "Capture": "capture_it_2regular",
+//   "Capture It": "capture_itregular",
+//   "Chivobold": "chivobold",
+//   "Choplinelight": "choplinextralight",
+//   "Choplinmedium": "choplinmedium",
+//   "Courgette": "courgette",
+//   "Debbyscript": "debbyscript",
+//   "Geomanist": "geomanist",
+//   "Grand Hotel": "grand_hotelregular",
+//   "Handmade": "nexa_rust_handmadeextended",
+//   "Homiziolight": "homiziolight",
+//   "Kaushanscript": "KaushanScript-Regular",
+//   "Kinescope": "kinescope",
+//   "King Basil": "king_basil_literegular",
+//   "Liberalhand": "liberal_handbold",
+//   "Luthierbold": "luthierbold",
+//   "Luthierregular": "luthierregular",
+//   "Malua": "swistblnk_moalang_melintangRg",
+//   "Melo": "meloregular",
+//   "Moabear": "swistblnk_moabhoers_bold",
+//   "Modum": "modumregular",
+//   "Nickainley": "nickainley",
+//   "Niconne": "niconne",
+//   "Norwester": "norwester",
+//   "Proxima": "proxima-nova",
+//   "Reefbold": "Reefbold",
+//   "Rhodium": "rhodium",
+//   "Rubikbitalic": "rubikbold_italic",
+//   "Rubikitalic": "rubikblack_italic",
+//   "Rubikregular": "rubikregular",
+//   "Rustscript": "nexa_rust_script_l0regular",
+//   "Sansitabold": "sansitablack",
+//   "Sansitareg": "sansitabold",
+//   "Santelia": "santelia",
+//   "Santeliarough": "santelia_roughline_two",
+//   "Slablack": "nexa_rust_slabblack_shadow_01",
+//   "Sortdecai": "sortdecai",
+//   "Sortdecaibrush": "sortdecaibrush",
+//   "Streetwear": "streetwear",
+//   "Swistblnk": "swistblnk",
+//   "Variane": "variane",
+//   "Worksansbold": "work_sansbold",
+//   "Worksanshairline": "work_sanshairline",
+//   "Worksansregular": "work_sansregular",
+//   "Worksansthin": "work_sansthin",
+//   "Xplorer": "xplor_boldregular",
+// };
+

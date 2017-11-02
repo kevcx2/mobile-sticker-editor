@@ -14,6 +14,11 @@ const SHADOW_SETTINGS = {
   affectStroke: true,
 };
 
+export const loadCanvasJson = (json, onComplete) => {
+  if (!canvas) return;
+  canvas.loadFromJSON(json, onComplete);
+}
+
 const selectionIncludesText = () => {
   const currentSelectionGroup = canvas.getActiveGroup();
   const currentSelectionObject = canvas.getActiveObject();
@@ -83,6 +88,8 @@ export const onCanvasInitialized = (callback) => {
 };
 
 const addWithFade = (object) => {
+  object.cacheProperties.push('opacity');
+
   canvas.add(object);
   canvas.setActiveObject(object);
   object.animate(
@@ -93,6 +100,9 @@ const addWithFade = (object) => {
       onChange: () => {
         canvas.renderAll();
       },
+      onComplete: () => {
+        canvas.renderAll();
+      }
     },
   );
 };
@@ -136,23 +146,44 @@ export const applyTextStyle = (style) => {
   }
 };
 
+export const addSvgStickerToCanvas = (imgEl) => {
+  canvas.discardActiveGroup();
+  canvas.discardActiveObject();
+
+  fabric.loadSVGFromURL(imgEl.src, (objects, options) => {
+    var sticker = fabric.util.groupSVGElements(objects, options);
+    sticker.set({
+      left: 90,
+      top: 100,
+      opacity: 0,
+    });
+
+    sticker.scaleToWidth(100);
+    addWithFade(sticker);
+  });
+};
+
 export const addStickerToCanvas = (imgEl) => {
   canvas.discardActiveGroup();
   canvas.discardActiveObject();
-  canvas.renderAll();
 
-  const stickerImage = new fabric.Image(imgEl.cloneNode());
-  stickerImage.set({
-    left: 100,
-    top: 100,
-    opacity: 0,
-  });
-
-  // TODO figure out initial sizing for custom images
-  // stickerImage.scaleToHeight(100);
-  stickerImage.scaleToWidth(100);
-  addWithFade(stickerImage);
-};
+  const imgClone = imgEl.cloneNode();
+  imgClone.onload = () => {
+    const stickerImage = new fabric.Image(
+      imgClone,
+      {
+        left: 100,
+        top: 100,
+        opacity: 1,
+      },
+      (sticker) => {
+        // TODO figure out initial sizing for custom images
+        sticker.scaleToWidth(100);
+        addWithFade(sticker);
+      }
+    );
+  }
+}
 
 const removeWithFade = (object) => {
   object.animate(
@@ -165,6 +196,7 @@ const removeWithFade = (object) => {
       },
       onComplete: () => {
         canvas.remove(object);
+        canvas.renderAll();
       },
     },
   );

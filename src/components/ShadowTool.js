@@ -32,13 +32,6 @@ class ShadowTool extends Component {
     canvas.on('selection:cleared', this.clearShadowCheckbox);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const stateChanged = !(JSON.stringify(this.state) === JSON.stringify(prevState));
-    if (this.state.selectionHasShadow && stateChanged) {
-      this.applyShadow();
-    }
-  }
-
   componentWillUnmount() {
     const canvas = getCanvas();
     canvas.off('object:selected', this.checkSelectionShadow);
@@ -57,12 +50,20 @@ class ShadowTool extends Component {
   onColorChange = (color) => {
     this.setState({
       color,
-    });
+    }, () => this.applyShadow({
+      color,
+    }));
   }
 
   onShadowSettingsChange = (evt) => {
+    const id = evt.target.id;
+    const value = evt.target.value || 0;
     this.setState({
-      [evt.target.id]: evt.target.value,
+      [id]: value,
+    }, () => {
+      this.applyShadow({
+        [id]: value,
+      });
     });
   }
 
@@ -97,12 +98,12 @@ class ShadowTool extends Component {
     });
   }
 
-  applyShadow = () => {
+  applyShadow = (shadowStyle = {}) => {
     applyShadowToSelection({
-      offsetX: this.state.offsetX,
-      offsetY: this.state.offsetY,
-      blur: this.state.blur,
-      color: this.state.color,
+      offsetX: shadowStyle.offsetX === undefined ? SHADOW_DEFAULTS.offsetX : shadowStyle.offsetX,
+      offsetY: shadowStyle.offsetY === undefined ?  SHADOW_DEFAULTS.offsetY : shadowStyle.offsetY,
+      blur: shadowStyle.blur === undefined ?  SHADOW_DEFAULTS.blur : shadowStyle.blur,
+      color: shadowStyle.color === undefined ?  SHADOW_DEFAULTS.color : shadowStyle.color,
     });
 
     this.setState({

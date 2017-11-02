@@ -7,7 +7,7 @@ import ToolArea from './components/ToolArea';
 import './App.css';
 
 // const filterSlug = "christmas_family";
-const filterSlug = 'christmas_family';
+const filterSlug = 'pool_party';
 
 
 class App extends Component {
@@ -17,8 +17,7 @@ class App extends Component {
   }
 
   state = {
-    width: 320,
-    height: 568,
+    width: 365.7,
     filterJSON: undefined,
   }
   // 279 x   497   base
@@ -48,7 +47,6 @@ class App extends Component {
         <ToolArea />
         <EditArea
           width={this.state.width}
-          height={this.state.height}
           filter={this.state.filterJSON}
         />
       </div>

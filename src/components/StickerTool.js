@@ -1,39 +1,46 @@
 import React, { Component } from 'react';
 
-import { addStickerToCanvas } from '../canvas';
+import { addSvgStickerToCanvas } from '../canvas';
 import ToolHeader from './ToolHeader';
 
 import './StickerTool.css';
 
-import sticker1 from '../img/1f60b.svg';
-import sticker2 from '../img/1f60c.svg';
-import sticker3 from '../img/1f60d.svg';
-import sticker4 from '../img/1f60e.svg';
-import sticker5 from '../img/1f60f.svg';
+const importAll = (r) => {
+  let images = {};
+  r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+  return images;
+}
+const CATEGORY_ICONS = importAll(require.context('../img/icons', false, /\.png$/));
+const SMILES_STICKERS = importAll(require.context('../img/stickers/Smiles', false, /\.svg$/));
+const ANIMALS_STICKERS = importAll(require.context('../img/stickers/Animals', false, /\.svg$/));
+const BUSINESS_STICKERS = importAll(require.context('../img/stickers/Business', false, /\.svg$/));
+const FLAGS_STICKERS = importAll(require.context('../img/stickers/Flags', false, /\.svg$/));
+const FOOD_STICKERS = importAll(require.context('../img/stickers/Food', false, /\.svg$/));
+const PEOPLE_STICKERS = importAll(require.context('../img/stickers/People', false, /\.svg$/));
+const RANDOM_STICKERS = importAll(require.context('../img/stickers/Random', false, /\.svg$/));
+const SPORTS_STICKERS = importAll(require.context('../img/stickers/Sports', false, /\.svg$/));
+const TRAVEL_STICKERS = importAll(require.context('../img/stickers/Travel', false, /\.svg$/));
 
-const TEST_STICKERS = {
-  1: sticker1,
-  2: sticker2,
-  3: sticker3,
-  4: sticker4,
-  5: sticker5,
-};
+const STICKERS = {
+  Smiles: SMILES_STICKERS,
+  Animals: ANIMALS_STICKERS,
+  Business: BUSINESS_STICKERS,
+  Flags: FLAGS_STICKERS,
+  Food: FOOD_STICKERS,
+  People: PEOPLE_STICKERS,
+  Random: RANDOM_STICKERS,
+  Sports: SPORTS_STICKERS,
+  Travel: TRAVEL_STICKERS,
+}
 
 class StickerTool extends Component {
   state = {
-    categories: TEST_STICKERS,
-    stickers: {
-      1: [{ id: 1, src: sticker1 }, { id: 2, src: sticker1 }, { id: 3, src: sticker1 }, { id: 4, src: sticker1 }, { id: 5, src: sticker1 }, { id: 6, src: sticker1 }, { id: 7, src: sticker1 }, { id: 8, src: sticker1 }, { id: 9, src: sticker1 }, { id: 10, src: sticker1 }, { id: 11, src: sticker1 }, { id: 12, src: sticker1 }, { id: 13, src: sticker1 }, { id: 14, src: sticker1 }, { id: 15, src: sticker1 }, { id: 16, src: sticker1 }, { id: 17, src: sticker1 }, { id: 18, src: sticker1 }, { id: 19, src: sticker1 }, { id: 20, src: sticker1 }],
-      2: [{ id: 1, src: sticker2 }, { id: 2, src: sticker2 }, { id: 3, src: sticker2 }, { id: 4, src: sticker2 }, { id: 5, src: sticker2 }, { id: 6, src: sticker2 }, { id: 7, src: sticker2 }, { id: 8, src: sticker2 }, { id: 9, src: sticker2 }, { id: 10, src: sticker2 }],
-      3: [{ id: 1, src: sticker3 }, { id: 2, src: sticker3 }, { id: 3, src: sticker3 }, { id: 4, src: sticker3 }, { id: 5, src: sticker3 }, { id: 6, src: sticker3 }, { id: 7, src: sticker3 }, { id: 8, src: sticker3 }, { id: 9, src: sticker3 }, { id: 10, src: sticker3 }],
-      4: [{ id: 1, src: sticker4 }, { id: 2, src: sticker4 }, { id: 3, src: sticker4 }, { id: 4, src: sticker4 }, { id: 5, src: sticker4 }, { id: 6, src: sticker4 }, { id: 7, src: sticker4 }, { id: 8, src: sticker4 }, { id: 9, src: sticker4 }, { id: 10, src: sticker4 }],
-      5: [{ id: 1, src: sticker5 }, { id: 2, src: sticker5 }, { id: 3, src: sticker5 }, { id: 4, src: sticker5 }, { id: 5, src: sticker5 }, { id: 6, src: sticker5 }, { id: 7, src: sticker5 }, { id: 8, src: sticker5 }, { id: 9, src: sticker5 }, { id: 10, src: sticker5 }],
-    },
-    activeCategory: 1,
+    stickers: STICKERS,
+    activeCategory: 'Smiles',
   };
 
   onAddSticker(evt) {
-    addStickerToCanvas(evt.target);
+    addSvgStickerToCanvas(evt.target);
   }
 
   selectStickerCategory = (categoryName) => {
@@ -48,16 +55,15 @@ class StickerTool extends Component {
         <ToolHeader size="large">Add Stickers</ToolHeader>
         <div className="StickerTool-category_list_wrapper">
           <div className="StickerTool-category_list">
-            {Object.keys(this.state.categories).map((stickerCategory) => {
-              const stickerSrc = this.state.categories[stickerCategory];
+            {Object.keys(this.state.stickers).map((stickerCategory) => {
               return (
                 <img
                   key={stickerCategory}
                   className="StickerTool-category_image"
                   onClick={() => this.selectStickerCategory(stickerCategory)}
-                  width={25}
-                  height={25}
-                  src={stickerSrc}
+                  width={30}
+                  height={30}
+                  src={CATEGORY_ICONS[`${stickerCategory}.png`]}
                   alt="sticker"
                 />
               );
@@ -66,14 +72,14 @@ class StickerTool extends Component {
         </div>
         <div className="StickerTool-sticker_list_wrapper">
           <div className="StickerTool-sticker_list">
-            {this.state.stickers[this.state.activeCategory].map(sticker => (
+            {Object.values(this.state.stickers[this.state.activeCategory]).map((stickerSrc, idx) => (
               <img
-                key={sticker.id}
+                key={idx}
                 className="StickerTool-sticker_image"
                 onClick={this.onAddSticker}
-                width={45}
-                height={45}
-                src={sticker.src}
+                width={60}
+                height={60}
+                src={stickerSrc}
                 alt="sticker"
               />
             ))}
@@ -83,5 +89,6 @@ class StickerTool extends Component {
     );
   }
 }
+
 
 export default StickerTool;
