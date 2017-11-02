@@ -80,6 +80,7 @@ export const setFabricCanvas = (fabricCanvas) => {
       canvas.bringToFront(canvas.getActiveObject());
     }
   });
+
   return canvas;
 };
 
@@ -156,6 +157,8 @@ export const addSvgStickerToCanvas = (imgEl) => {
       left: 90,
       top: 100,
       opacity: 0,
+      // Prevents blurriness during scaling for cached svgs.
+      noScaleCache: false,
     });
 
     sticker.scaleToWidth(100);
@@ -172,9 +175,9 @@ export const addStickerToCanvas = (imgEl) => {
     const stickerImage = new fabric.Image(
       imgClone,
       {
-        left: 100,
+        left: 90,
         top: 100,
-        opacity: 1,
+        opacity: 0,
       },
       (sticker) => {
         // TODO figure out initial sizing for custom images
@@ -242,6 +245,7 @@ const setShadow = (object, settings) => {
   object.setShadow(Object.assign(SHADOW_SETTINGS, settings));
   canvas.renderAll();
 };
+
 
 export const applyShadowToSelection = (settings) => {
   const currentSelectionGroup = canvas.getActiveGroup();
