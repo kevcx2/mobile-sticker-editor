@@ -16,8 +16,15 @@
   font-weight: bold !important;
   font-size: 17px !important;
   margin: 5px !important;
+  transition: none !important;
 }
 
 .EditorButton:active {
   background: #f3f3f3 !important;
+}
+
+
+.SmallLayout .EditorButton {
+  font-size: 12px !important;
+  height: 50px;
 }

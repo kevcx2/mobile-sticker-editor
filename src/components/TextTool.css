@@ -60,3 +60,15 @@
 .TextTool-color_container {
   margin-left: 12px;
 }
+
+.SmallLayout .TextTool-add_text_button {
+  position: absolute;
+  width: 30%;
+  top: -66px;
+  left: -5px;
+}
+
+.SmallLayout .TextTool-color_container {
+  display: inline-block;
+  margin-top: 8px;
+}

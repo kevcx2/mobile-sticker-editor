@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { fabric } from 'fabric';
 
 import { setFabricCanvas, getCanvas, loadCanvasJson } from '../canvas';
+import StaticCanvas from './StaticCanvas';
 import DeleteSelectionPopup from './DeleteSelectionPopup';
 import phoneSvg from '../img/phone.svg';
 
@@ -13,6 +14,16 @@ const BASE_CANVAS_HEIGHT = 496;
 class EditArea extends Component {
   componentDidMount() {
     setFabricCanvas(new fabric.Canvas('filter'));
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.width !== this.props.width) {
+      const newSizing = this.getCanvasSizing(nextProps.width)
+      const canvas = getCanvas();
+      canvas.setWidth(newSizing.width);
+      canvas.setHeight(newSizing.height);
+      window.setTimeout(() => this.setCanvasZoom(), 250);
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -37,8 +48,8 @@ class EditArea extends Component {
     this.setCanvasZoom();
   }
 
-  getCanvasSizing() {
-    const canvasWidth = .875 * this.props.width;
+  getCanvasSizing(width) {
+    const canvasWidth = .875 * width;
     const canvasHeight = (canvasWidth * BASE_CANVAS_HEIGHT) / BASE_CANVAS_WIDTH;
     const sizingData = {
       width: canvasWidth,
@@ -55,13 +66,14 @@ class EditArea extends Component {
   setCanvasZoom() {
     const canvas = getCanvas();
     if (canvas) {
-      const canvasSizing = this.getCanvasSizing();
+      const canvasSizing = this.getCanvasSizing(this.props.width);
       canvas.setZoom(canvasSizing.scaleRatio);
+      canvas.renderAll();
     }
   }
 
   render() {
-    const canvasSizing = this.getCanvasSizing();
+    const canvasSizing = this.getCanvasSizing(this.props.width);
     return (
       <div className="EditArea" style={{width: this.props.width}}>
         <img src={phoneSvg}></img>
@@ -70,7 +82,7 @@ class EditArea extends Component {
           style={{width: canvasSizing.width, height: canvasSizing.height}}
         ></div>
         <div className="EditArea-canvas_container">
-          <canvas id="filter" width={canvasSizing.width} height={canvasSizing.height} />
+          <StaticCanvas width={canvasSizing.width} height={canvasSizing.height} />
           {getCanvas() ? (
             <DeleteSelectionPopup
               canvasSizing={canvasSizing}

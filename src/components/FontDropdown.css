@@ -72,3 +72,13 @@
 .FontDropdown-disabled {
   cursor: initial;
 }
+
+.SmallLayout .FontDropdown {
+  width: calc(100% - 100px);
+  display: inline-block;
+  margin-right: 0;
+}
+
+.SmallLayout .FontDropdown-dropdown {
+  max-height: 150px;
+}

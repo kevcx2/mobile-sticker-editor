@@ -52,6 +52,9 @@ class ShadowTool extends Component {
       color,
     }, () => this.applyShadow({
       color,
+      offsetX: this.state.offsetX,
+      offsetY: this.state.offsetY,
+      blur: this.state.blur,
     }));
   }
 
@@ -61,9 +64,14 @@ class ShadowTool extends Component {
     this.setState({
       [id]: value,
     }, () => {
-      this.applyShadow({
+      this.applyShadow(Object.assign({}, {
+        color: this.state.color,
+        offsetX: this.state.offsetX,
+        offsetY: this.state.offsetY,
+        blur: this.state.blur,
+      }, {
         [id]: value,
-      });
+      }));
     });
   }
 

@@ -7,6 +7,8 @@
   margin-bottom: 0px;
   margin-top: 30px;
   box-shadow: none;
+  transition: none;
+  background: none;
 }
 
 .ImageUploadTool-error {
@@ -30,3 +32,13 @@
   opacity: 0;
 }
 
+.SmallLayout  .ImageUploadTool {
+  position: absolute;
+  width: 30%;
+  left: 32%;
+  top: -66px;
+}
+
+.SmallLayout  .ImageUploadTool .fileContainer {
+  margin-top: 0;
+}

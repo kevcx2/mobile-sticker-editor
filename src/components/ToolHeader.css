@@ -6,3 +6,7 @@
 .ToolHeader-large {
   font-size: 16px;
 }
+
+.SmallLayout .ToolHeader {
+  display: none;
+}

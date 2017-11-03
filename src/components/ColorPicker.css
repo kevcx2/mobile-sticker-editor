@@ -35,3 +35,8 @@
 .ColorPicker-disabled {
   cursor: default;
 }
+
+.SmallLayout .ColorPicker-color_preview_container {
+  margin-top: 0;
+  margin-bottom: 0;
+}

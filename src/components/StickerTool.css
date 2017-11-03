@@ -1,16 +1,34 @@
-/*.StickerTool-button {
-  -webkit-appearance: none;
-  background-color: white;
-  padding: 2px;
-  margin: 2px;
-}*/
 .StickerTool {
+  margin-top: 20px;
   width: 100%;
-  height: 39%;
+  height: 41%;
 }
 
 .StickerTool-category_list_wrapper {
-  overflow: auto;
+  position: relative;
+}
+
+.StickerTool-category_list_overflow_wrapper {
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: calc(100% - 65px);
+  margin-left: 25px;
+}
+
+.StickerTool-category_list-scroll_button {
+  position: absolute;
+  top: 4px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.StickerTool-category_list-scroll_button.right {
+  right: 7px;
+  transform: scale(-1, 1);
+}
+
+.StickerTool-category_list-scroll_button.left {
+  left: -7px;
 }
 
 .StickerTool-category_list {
@@ -19,10 +37,10 @@
 }
 
 .StickerTool-category_image {
+  width: 34px;
   box-shadow: 0px 0px 2px 1px rgba(0,0,0,.2);
   border-radius: 3px;
   margin: 4px;
-  padding: 2px;
   cursor: pointer;
 }
 
@@ -36,10 +54,54 @@
 }
 
 .StickerTool-sticker_image {
-  margin: 4px 9px;
+  width: 50px;
+  margin: 7px 7px;
   cursor: pointer;
 }
 
 .StickerTool-sticker_image:active {
   background-color: #f3f3f3;
+}
+
+.SmallLayout .StickerTool {
+  display: none;
+}
+
+.SmallLayout .StickerTool-sticker_image {
+  width: 35px;
+}
+
+.SmallLayout .StickerTool-category_list-scroll_button.left {
+  left: 2px;
+}
+
+.SmallLayout .StickerTool-category_list_overflow_wrapper {
+  width: calc(100% - 80px);
+  margin-left: 40px;
+}
+
+.ExSmallLayout .StickerTool-category_list_overflow_wrapper {
+  width: calc(100% - 39px);
+  margin-left: 20px;
+}
+
+.ExSmallLayout .StickerTool-arrow {
+  width: 14px;
+}
+
+.ExSmallLayout .StickerTool-category_list-scroll_button {
+    top: -4px;
+    padding: 15px 0px 15px 15px;
+}
+
+.ExSmallLayout .StickerTool-category_list-scroll_button.right {
+  right: -9px;
+}
+
+.ExSmallLayout .StickerTool-category_list-scroll_button.left {
+  left: -10px;
+}
+
+.ExSmallLayout .StickerTool-sticker_list {
+  margin-left: 12px;
 }

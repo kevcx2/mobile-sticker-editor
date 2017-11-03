@@ -14,9 +14,18 @@ class ColorPicker extends Component {
         this.colorPicker && this.colorPicker.getBoundingClientRect();
       if (!colorPickerBoundingRect) return;
 
+      // Check if the colorpicker is out the viewport on the top or right, and correct its
+      // position if it is.
       if (colorPickerBoundingRect.top < 0) {
         const currTop = parseInt(window.getComputedStyle(this.colorPicker).top, 10);
         this.colorPicker.style.top = `${currTop + (-1 * colorPickerBoundingRect.top)}px`;
+      }
+
+      const viewWidth = document.documentElement.clientWidth;
+      if (colorPickerBoundingRect.right > viewWidth) {
+        const currLeft = parseInt(window.getComputedStyle(this.colorPicker).left, 10);
+        this.colorPicker.style.left =
+          `${currLeft + (-1 * (colorPickerBoundingRect.right - viewWidth))}px`
       }
     }
   }

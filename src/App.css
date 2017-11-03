@@ -1,1 +1,30 @@
 
+
+.App-small_sticker_container {
+  display: none;
+}
+
+.SmallLayout .App-small_sticker_container {
+  display: initial;
+}
+
+.App-small_sticker_container {
+  position: absolute;
+  right: 0px;
+  top: 14px;
+  width: 165px;
+  padding: 13px 0px;
+  margin-right: 3%;
+
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 2px 1px;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.App-small_sticker_container.ExSmallLayout {
+  width: 125px;
+}
+
+.SmallLayout .App-small_sticker_container .StickerTool {
+  display: initial;
+}

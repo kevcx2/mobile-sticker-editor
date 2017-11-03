@@ -97,23 +97,10 @@ class TextTool extends Component {
     );
   }
 
-  renderTextAlignOption(option, isDisabled) {
-    const isActive = option === this.state.textAlign;
-    return (
-      <div
-        key={option}
-        onClick={() => this.onAlignChange(option)}
-        className={`TextTool-align_icon${isDisabled ? ' TextTool-align_icon_disabled' : ''}`}
-      >
-        <AlignmentIcon value={option} active={isActive} disabled={isDisabled} />
-      </div>
-    );
-  }
-
   render() {
     return (
       <div>
-        <EditorButton onClick={() => addTextToCanvas(this.state.fontFamily)}>
+        <EditorButton className="TextTool-add_text_button" onClick={() => addTextToCanvas(this.state.fontFamily)}>
           + Add Text
         </EditorButton>
         <ToolHeader>Typeface</ToolHeader>
@@ -132,71 +119,3 @@ class TextTool extends Component {
 }
 
 export default TextTool;
-
-// var fonts = {};
-
-// document.querySelectorAll('.dropdown-menu')[0].querySelectorAll('li').forEach((liEl) => {
-//   var aEl = liEl.querySelector('a');
-//   fonts[aEl.innerText] = aEl.style.fontFamily;te
-// });
-// const FONTS = {
-//   "Aleo-bold": "aleobold",
-//   "Aleo-light": "aleolight",
-//   "Alex Brush": "alex_brushregular",
-//   "Alghifari": "_mj_alghifariregular",
-//   "Antiquabold": "inknut_antiquabold",
-//   "Antiquaregular": "inknut_antiquaregular",
-//   "Atzurbold": "atzurbold",
-//   "Badhead": "badhead",
-//   "Blenny": "blenny",
-//   "Boston Traffic": "boston_trafficregular",
-//   "Brushbear": "swistblnk_duwhoers_brushRg",
-//   "Bukhariscript": "bukhari_script",
-//   "Capture": "capture_it_2regular",
-//   "Capture It": "capture_itregular",
-//   "Chivobold": "chivobold",
-//   "Choplinelight": "choplinextralight",
-//   "Choplinmedium": "choplinmedium",
-//   "Courgette": "courgette",
-//   "Debbyscript": "debbyscript",
-//   "Geomanist": "geomanist",
-//   "Grand Hotel": "grand_hotelregular",
-//   "Handmade": "nexa_rust_handmadeextended",
-//   "Homiziolight": "homiziolight",
-//   "Kaushanscript": "KaushanScript-Regular",
-//   "Kinescope": "kinescope",
-//   "King Basil": "king_basil_literegular",
-//   "Liberalhand": "liberal_handbold",
-//   "Luthierbold": "luthierbold",
-//   "Luthierregular": "luthierregular",
-//   "Malua": "swistblnk_moalang_melintangRg",
-//   "Melo": "meloregular",
-//   "Moabear": "swistblnk_moabhoers_bold",
-//   "Modum": "modumregular",
-//   "Nickainley": "nickainley",
-//   "Niconne": "niconne",
-//   "Norwester": "norwester",
-//   "Proxima": "proxima-nova",
-//   "Reefbold": "Reefbold",
-//   "Rhodium": "rhodium",
-//   "Rubikbitalic": "rubikbold_italic",
-//   "Rubikitalic": "rubikblack_italic",
-//   "Rubikregular": "rubikregular",
-//   "Rustscript": "nexa_rust_script_l0regular",
-//   "Sansitabold": "sansitablack",
-//   "Sansitareg": "sansitabold",
-//   "Santelia": "santelia",
-//   "Santeliarough": "santelia_roughline_two",
-//   "Slablack": "nexa_rust_slabblack_shadow_01",
-//   "Sortdecai": "sortdecai",
-//   "Sortdecaibrush": "sortdecaibrush",
-//   "Streetwear": "streetwear",
-//   "Swistblnk": "swistblnk",
-//   "Variane": "variane",
-//   "Worksansbold": "work_sansbold",
-//   "Worksanshairline": "work_sanshairline",
-//   "Worksansregular": "work_sansregular",
-//   "Worksansthin": "work_sansthin",
-//   "Xplorer": "xplor_boldregular",
-// };
-

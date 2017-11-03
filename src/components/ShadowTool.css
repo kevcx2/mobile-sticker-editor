@@ -1,7 +1,7 @@
 .ShadowTool {
   position: relative;
   width: calc(100% - 10px);
-  height: 75px;
+  height: 35px;
   margin-left: 10px;
 }
 
@@ -81,4 +81,9 @@
 .ShadowTool-input_label:last-of-type {
     font-size: 11px;
     letter-spacing: 1px;
+}
+
+.SmallLayout .ShadowTool {
+  height: 62px;
+  margin-top: 2px;
 }

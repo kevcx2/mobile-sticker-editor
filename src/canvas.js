@@ -123,6 +123,10 @@ export const addTextToCanvas = (font) => {
   text.scaleToWidth(250);
 
   addWithFade(text);
+
+  text.enterEditing();
+  text.selectionStart = 0;
+  text.selectionEnd = text.text.length;
 };
 
 const setTextStyle = (object, style) => {
