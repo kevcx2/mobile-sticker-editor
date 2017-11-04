@@ -2,6 +2,8 @@
   display: inline-block;
   width: 300px;
   position: relative;
+
+  transition: opacity .25s;
 }
 
 .EditArea-canvas_container {
@@ -21,4 +23,12 @@
   top: 10.5%;
   left: 5%;
   box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.3);
+}
+
+.EditArea-visible {
+  opacity: 1;
+}
+
+.EditArea-hidden {
+  opacity: 0;
 }

@@ -12,6 +12,10 @@ const BASE_CANVAS_WIDTH = 279;
 const BASE_CANVAS_HEIGHT = 496;
 
 class EditArea extends Component {
+  state = {
+    phoneSvgLoaded: false,
+  }
+
   componentDidMount() {
     setFabricCanvas(new fabric.Canvas('filter'));
   }
@@ -22,29 +26,17 @@ class EditArea extends Component {
       const canvas = getCanvas();
       canvas.setWidth(newSizing.width);
       canvas.setHeight(newSizing.height);
-      window.setTimeout(() => this.setCanvasZoom(), 250);
+      window.setTimeout(() => this.setCanvasZoom(), 0);
     }
   }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.filter && this.props.filter) {
-      loadCanvasJson(this.props.filter, this.onUpdateCanvasJSON)
+      setTimeout(() => loadCanvasJson(this.props.filter, this.onUpdateCanvasJSON), 500);
     }
   }
 
   onUpdateCanvasJSON = () => {
-
-    getCanvas().getObjects().forEach((obj) => {
-      if (obj.type === 'i-text') {
-        obj.fontSize = obj.fontSize - 1;
-        getCanvas().renderAll();
-        obj.fontSize = obj.fontSize + 1;
-        getCanvas().renderAll();
-        obj.fontSize = obj.fontSize + 1;
-        getCanvas().renderAll();
-      }
-    });
-
     this.setCanvasZoom();
   }
 
@@ -74,9 +66,11 @@ class EditArea extends Component {
 
   render() {
     const canvasSizing = this.getCanvasSizing(this.props.width);
+    const visibilityClass = this.state.phoneSvgLoaded ? 'EditArea-visible' : 'EditArea-hidden';
+
     return (
-      <div className="EditArea" style={{width: this.props.width}}>
-        <img src={phoneSvg}></img>
+      <div className={"EditArea " + visibilityClass} style={{width: this.props.width}}>
+        <img onLoad={() => this.setState({phoneSvgLoaded: true})} src={phoneSvg}></img>
         <div 
           className="EditArea-canvas_shadow"
           style={{width: canvasSizing.width, height: canvasSizing.height}}

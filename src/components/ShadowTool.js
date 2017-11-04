@@ -58,6 +58,15 @@ class ShadowTool extends Component {
     }));
   }
 
+  onColorOpen = () => {
+    this.applyShadow({
+      color: this.state.color,
+      offsetX: this.state.offsetX,
+      offsetY: this.state.offsetY,
+      blur: this.state.blur,
+    });
+  }
+
   onShadowSettingsChange = (evt) => {
     const id = evt.target.id;
     const value = evt.target.value || 0;
@@ -137,7 +146,7 @@ class ShadowTool extends Component {
           <div className="ShadowTool-color_picker_container">
             <ColorPicker
               color={this.state.color}
-              onOpen={this.applyShadow}
+              onOpen={this.onColorOpen}
               onChange={this.onColorChange}
               disabled={!this.state.hasSelection}
             />

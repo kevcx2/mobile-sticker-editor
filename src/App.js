@@ -13,13 +13,7 @@ const filterSlug = "christmas_family";
 const EXTRA_SMALL_LAYOUT_BREAKPOINT = 475;
 const SMALL_LAYOUT_BREAKPOINT = 625;
 const LARGE_LAYOUT_EDITOR_WIDTH = 320;
-  // 279 x   497   base
-  // 139.5 x 248   //.5x
-  // 418.5 x 745.5 //1.5
 
-  // 320 x 568 base
-  // state = { width: 160, height: 284 } //.5x
-  // state = {width: 480, height: 852} //1.5x
 
 class App extends Component {
   constructor(props) {
@@ -28,7 +22,7 @@ class App extends Component {
   }
 
   state = {
-    width: 320,
+    width: 0,
     filterJSON: undefined,
     smallLayout: false,
   }
@@ -55,6 +49,7 @@ class App extends Component {
     window.removeEventListener('resize', this.updateSize);
   }
 
+  // The editor sets its width based on the width of its parent.
   updateSize = () => {
     this.setState({
       width: this.appEl.parentElement.clientWidth,
@@ -63,24 +58,28 @@ class App extends Component {
 
   render() {
     const isExSmallLayout = this.state.width < EXTRA_SMALL_LAYOUT_BREAKPOINT;
-    const inSmallLayout = this.state.width < SMALL_LAYOUT_BREAKPOINT;
-    let editWidth = inSmallLayout ? this.state.width - 190 : LARGE_LAYOUT_EDITOR_WIDTH;
+    const isSmallLayout = this.state.width < SMALL_LAYOUT_BREAKPOINT;
+    let editWidth = isSmallLayout ? this.state.width - 190 : LARGE_LAYOUT_EDITOR_WIDTH;
     editWidth = isExSmallLayout ? this.state.width - 150 : editWidth;
 
+    const layoutClass = (isSmallLayout ? 'SmallLayout ' : '' ) + (isExSmallLayout ? 'ExSmallLayout' : '');
 
     // Positioning login gets a little messy... unfortunately its what is needed to accomodate
-    // the large differences in desktop and mobile design.
+    // the large differences in desktop and mobile design. One hing to note is that there are two
+    // copies of the sticker tool, one in the ToolArea, and one rendered here. The one in the
+    // tool area will be shown on large screen layouts, and the one here will be shown on small
+    // screen layouts.
     return (
       <div
         ref={(appEl) => this.appEl = appEl}
-        className={inSmallLayout ? "SmallLayout" : ""}
+        className={layoutClass}
       >
         <EditArea
           width={editWidth}
           filter={this.state.filterJSON}
         />
         <div
-          className={"App-small_sticker_container" + (isExSmallLayout ? ' ExSmallLayout' : '')}
+          className={"App-small_sticker_container"}
           style={{height: 1.78 * (editWidth)}}
         >
           <StickerTool smallLayout={true}/>
