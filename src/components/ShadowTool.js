@@ -5,7 +5,7 @@ import {
   getSelectionShadows,
   applyShadowToSelection,
   removeShadowFromSelection,
-  hexToRgbA
+  hexToRgbA,
 } from '../canvas';
 import ColorPicker from './ColorPicker';
 import ToolHeader from './ToolHeader';
@@ -118,9 +118,9 @@ class ShadowTool extends Component {
   applyShadow = (shadowStyle = {}) => {
     applyShadowToSelection({
       offsetX: shadowStyle.offsetX === undefined ? SHADOW_DEFAULTS.offsetX : shadowStyle.offsetX,
-      offsetY: shadowStyle.offsetY === undefined ?  SHADOW_DEFAULTS.offsetY : shadowStyle.offsetY,
-      blur: shadowStyle.blur === undefined ?  SHADOW_DEFAULTS.blur : shadowStyle.blur,
-      color: shadowStyle.color === undefined ?  SHADOW_DEFAULTS.color : shadowStyle.color,
+      offsetY: shadowStyle.offsetY === undefined ? SHADOW_DEFAULTS.offsetY : shadowStyle.offsetY,
+      blur: shadowStyle.blur === undefined ? SHADOW_DEFAULTS.blur : shadowStyle.blur,
+      color: shadowStyle.color === undefined ? SHADOW_DEFAULTS.color : shadowStyle.color,
     });
 
     this.setState({

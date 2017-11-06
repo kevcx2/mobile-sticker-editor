@@ -7,7 +7,7 @@ import StickerTool from './components/StickerTool';
 
 import './App.css';
 
-const filterSlug = "christmas_family";
+const filterSlug = 'christmas_family';
 // const filterSlug = 'pool_party';
 
 const EXTRA_SMALL_LAYOUT_BREAKPOINT = 475;
@@ -24,15 +24,13 @@ class App extends Component {
   state = {
     width: 0,
     filterJSON: undefined,
-    smallLayout: false,
   }
-
-  resizeTimer = undefined
 
   componentDidMount() {
     this.updateSize();
     window.addEventListener('resize', this.updateSize);
 
+    // TODO remove this once we make this a standalone component
     const parseFilterResponse = (response) => {
       this.setState({
         filterJSON: response.design_json,
@@ -62,7 +60,7 @@ class App extends Component {
     let editWidth = isSmallLayout ? this.state.width - 190 : LARGE_LAYOUT_EDITOR_WIDTH;
     editWidth = isExSmallLayout ? this.state.width - 150 : editWidth;
 
-    const layoutClass = (isSmallLayout ? 'SmallLayout ' : '' ) + (isExSmallLayout ? 'ExSmallLayout' : '');
+    const layoutClass = (isSmallLayout ? 'SmallLayout ' : '') + (isExSmallLayout ? 'ExSmallLayout' : '');
 
     // Positioning login gets a little messy... unfortunately its what is needed to accomodate
     // the large differences in desktop and mobile design. One hing to note is that there are two
@@ -71,7 +69,7 @@ class App extends Component {
     // screen layouts.
     return (
       <div
-        ref={(appEl) => this.appEl = appEl}
+        ref={(appEl) => { this.appEl = appEl; }}
         className={layoutClass}
       >
         <EditArea
@@ -79,12 +77,12 @@ class App extends Component {
           filter={this.state.filterJSON}
         />
         <div
-          className={"App-small_sticker_container"}
-          style={{height: 1.78 * (editWidth)}}
+          className="App-small_sticker_container"
+          style={{ height: 1.78 * (editWidth) }}
         >
-          <StickerTool smallLayout={true}/>
+          <StickerTool smallLayout />
         </div>
-        <ToolArea/>
+        <ToolArea />
       </div>
     );
   }

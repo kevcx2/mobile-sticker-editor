@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { getCanvas } from '../canvas';
 
-import './SaveButton.css'
+import './SaveButton.css';
 
 const SAVED_FILTER_WIDTH = 1080;
 const SAVED_FILTER_HEIGHT = 1920;
@@ -34,7 +34,7 @@ class SaveButton extends Component {
     demoImg.style.backgroundColor = 'lightgrey';
     demoImg.style.zIndex = '1000';
 
-    demoImg.onclick = () => {document.body.removeChild(demoImg)}
+    demoImg.onclick = () => { document.body.removeChild(demoImg); };
     document.body.appendChild(demoImg);
 
     canvas.setWidth(startingWidth);

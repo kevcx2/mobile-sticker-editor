@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { getCanvas } from '../canvas';
 import TextTool from './TextTool';
@@ -7,21 +7,19 @@ import ShadowTool from './ShadowTool';
 import ImageUploadTool from './ImageUploadTool';
 import SaveButton from './SaveButton';
 
-import './ToolArea.css';  
+import './ToolArea.css';
 
-class ToolArea extends Component {
-  render() {
-    if (!getCanvas()) return null;
-    return (
-      <div className="ToolArea">
-        <TextTool/>
-        <ShadowTool />
-        <StickerTool />
-        <ImageUploadTool />
-        <SaveButton />
-      </div>
-    );
-  }
+const ToolArea = () => {
+  if (!getCanvas()) return null;
+  return (
+    <div className="ToolArea">
+      <TextTool />
+      <ShadowTool />
+      <StickerTool />
+      <ImageUploadTool />
+      <SaveButton />
+    </div>
+  );
 };
 
 export default ToolArea;

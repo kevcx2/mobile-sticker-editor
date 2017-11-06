@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 // canvas resizing and any other changes will be controlled by fabric, and not react.
 // This is necesarry to resize the canvas dynamically without breaking fabric.
 class StaticCanvas extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate() {
     return false;
   }
 
@@ -16,4 +16,4 @@ class StaticCanvas extends Component {
   }
 }
 
-export default StaticCanvas
+export default StaticCanvas;

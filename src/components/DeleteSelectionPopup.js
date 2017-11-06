@@ -25,8 +25,6 @@ class DeleteSelectionPopup extends Component {
     },
   };
 
-  resizetimer = undefined;
-
   componentWillMount() {
     const canvas = getCanvas();
     canvas.on('object:modified', this.onObjectSelected);
@@ -37,7 +35,7 @@ class DeleteSelectionPopup extends Component {
     canvas.on('selection:cleared', this.onSelectionCleared);
     canvas.on('text:editing:entered', this.hidePopup);
     canvas.on('text:editing:exited', this.onObjectSelected);
-    window.addEventListener('resize',this.hidePopup);
+    window.addEventListener('resize', this.hidePopup);
   }
 
   componentWillUnmount() {
@@ -50,7 +48,7 @@ class DeleteSelectionPopup extends Component {
     canvas.off('selection:cleared', this.onSelectionCleared);
     canvas.off('text:editing:entered', this.hidePopup);
     canvas.off('text:editing:exited', this.onObjectSelected);
-    window.removeEventListener('resize',this.hidePopup);
+    window.removeEventListener('resize', this.hidePopup);
   }
 
   // When an object is selected, show the popup, set its initial

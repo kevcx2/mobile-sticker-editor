@@ -3,19 +3,15 @@ import React, { Component } from 'react';
 import { getCanvas, addTextToCanvas, applyTextStyle, hexToRgbA } from '../canvas';
 import ColorPicker from './ColorPicker';
 import EditorButton from './EditorButton';
-import AlignmentIcon from './AlignmentIcon';
 import ToolHeader from './ToolHeader';
 import FontDropdown from './FontDropdown';
 import FONTS from '../fonts/fontList';
 
 import './TextTool.css';
 
-const TEXT_ALIGN_OPTIONS = ['left', 'center', 'right'];
-
 const TEXT_DEFAULTS = {
   hasSelection: false,
   color: 'rgba(0,0,0,1)',
-  textAlign: TEXT_ALIGN_OPTIONS[0],
   fontFamily: Object.keys(FONTS)[0],
 };
 
@@ -39,7 +35,6 @@ class TextTool extends Component {
     this.setState({
       hasSelection: true,
       color: hexToRgbA(evt.target.fill),
-      textAlign: evt.target.textAlign,
       fontFamily: evt.target.fontFamily,
     });
   }
@@ -49,14 +44,6 @@ class TextTool extends Component {
       color,
     }, () => applyTextStyle({
       color,
-    }));
-  }
-
-  onAlignChange = (textAlign) => {
-    this.setState({
-      textAlign,
-    }, () => applyTextStyle({
-      textAlign,
     }));
   }
 
@@ -78,9 +65,7 @@ class TextTool extends Component {
       label: fontFamily,
     }));
 
-    const currentLabel = Object.keys(FONTS).find((key) => {
-      return FONTS[key] === this.state.fontFamily
-    });
+    const currentLabel = Object.keys(FONTS).find(key => FONTS[key] === this.state.fontFamily);
 
     const currentSelection = {
       value: this.state.fontFamily || dropdownOptions[0].value,

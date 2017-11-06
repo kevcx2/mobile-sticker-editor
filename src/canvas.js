@@ -17,7 +17,7 @@ const SHADOW_SETTINGS = {
 export const loadCanvasJson = (json, onComplete) => {
   if (!canvas) return;
   canvas.loadFromJSON(json, onComplete);
-}
+};
 
 const selectionIncludesText = () => {
   const currentSelectionGroup = canvas.getActiveGroup();
@@ -103,7 +103,7 @@ const addWithFade = (object) => {
       },
       onComplete: () => {
         canvas.renderAll();
-      }
+      },
     },
   );
 };
@@ -156,7 +156,7 @@ export const addSvgStickerToCanvas = (imgEl) => {
   canvas.discardActiveObject();
 
   fabric.loadSVGFromURL(imgEl.src, (objects, options) => {
-    var sticker = fabric.util.groupSVGElements(objects, options);
+    const sticker = fabric.util.groupSVGElements(objects, options);
     sticker.set({
       left: 90,
       top: 100,
@@ -176,7 +176,7 @@ export const addStickerToCanvas = (imgEl) => {
 
   const imgClone = imgEl.cloneNode();
   imgClone.onload = () => {
-    const stickerImage = new fabric.Image(
+    new fabric.Image(
       imgClone,
       {
         left: 90,
@@ -187,10 +187,10 @@ export const addStickerToCanvas = (imgEl) => {
         // TODO figure out initial sizing for custom images
         sticker.scaleToWidth(100);
         addWithFade(sticker);
-      }
+      },
     );
-  }
-}
+  };
+};
 
 const removeWithFade = (object) => {
   object.animate(
@@ -288,14 +288,14 @@ export const hexToRgbA = (hex) => {
   let c;
   if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
     c = hex.substring(1).split('');
-    if (c.length == 3) {
+    if (c.length === 3) {
       c = [c[0], c[0], c[1], c[1], c[2], c[2]];
     }
-    c = '0x'+c.join('');
-    return 'rgba(' + [(c>>16)&255, (c>>8)&255, c&255].join(',') + ',1)';
+    c = `0x${c.join('')}`;
+    return `rgba(${[(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',')},1)`; //eslint-disable-line
   }
-  return hex
-}
+  return hex;
+};
 
 // Returns a reference to the active fabricjs canvas object. This is not a
 // canvas HTML element.

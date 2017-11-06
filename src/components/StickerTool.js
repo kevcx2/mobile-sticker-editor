@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 
 import { addSvgStickerToCanvas } from '../canvas';
 import ToolHeader from './ToolHeader';
-import arrowIcon from '../img/arrow.svg'
+import arrowIcon from '../img/arrow.svg';
 
 import './StickerTool.css';
 
 const importAll = (r) => {
-  let images = {};
-  r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+  const images = {};
+  r.keys().map((item) => { images[item.replace('./', '')] = r(item); }); // eslint-disable-line
   return images;
-}
+};
+
 const CATEGORY_ICONS = importAll(require.context('../img/icons', false, /\.png$/));
 const SMILES_STICKERS = importAll(require.context('../img/stickers/Smiles', false, /\.svg$/));
 const ANIMALS_STICKERS = importAll(require.context('../img/stickers/Animals', false, /\.svg$/));
@@ -32,7 +33,7 @@ const STICKERS = {
   Random: RANDOM_STICKERS,
   Sports: SPORTS_STICKERS,
   Travel: TRAVEL_STICKERS,
-}
+};
 
 const CATEGORY_SCROLL_POSITIONS = [0, 42, 84, 126, 168, 210, 252, 294];
 
@@ -54,28 +55,26 @@ class StickerTool extends Component {
 
   scrollCategories = (direction) => {
     let newScrollPos = 0;
+    let currScrollLeft = this.categoryScrollEl.scrollLeft || 0;
     if (direction === 'left') {
-      CATEGORY_SCROLL_POSITIONS.sort((a, b) => b-a)
-      newScrollPos = CATEGORY_SCROLL_POSITIONS.find((scrollPos) => {
-        return (scrollPos < this.categoryScrollEl.scrollLeft)
-      });
+      CATEGORY_SCROLL_POSITIONS.sort((a, b) => b - a);
+      newScrollPos = CATEGORY_SCROLL_POSITIONS.find(scrollPos => (scrollPos < currScrollLeft));
     } else {
-      CATEGORY_SCROLL_POSITIONS.sort((a, b) => a-b)
-      newScrollPos = CATEGORY_SCROLL_POSITIONS.find((scrollPos) => {
-        return (scrollPos > this.categoryScrollEl.scrollLeft)
-      });
+      CATEGORY_SCROLL_POSITIONS.sort((a, b) => a - b);
+      newScrollPos = CATEGORY_SCROLL_POSITIONS.find(scrollPos => (scrollPos > currScrollLeft));
     }
 
-    this.categoryScrollEl.scrollLeft =
-      newScrollPos === undefined ? this.categoryScrollEl.scrollLeft : newScrollPos;
+    currScrollLeft = newScrollPos === undefined ? currScrollLeft : newScrollPos;
   }
 
   render() {
+    const stickers = this.state.stickers;
+
     return (
-      <div className={"StickerTool" + (this.props.smallLayout ? " SmallStickerTool" : "")}>
+      <div className={`StickerTool${this.props.smallLayout ? ' SmallStickerTool' : ''}`}>
         <ToolHeader size="large">Add Stickers</ToolHeader>
         <div className="StickerTool-category_list_wrapper">
-          <div 
+          <div
             className="StickerTool-category_list-scroll_button left"
             onClick={() => this.scrollCategories('left')}
           >
@@ -84,7 +83,7 @@ class StickerTool extends Component {
               src={arrowIcon}
             />
           </div>
-          <div 
+          <div
             className="StickerTool-category_list-scroll_button right"
             onClick={() => this.scrollCategories('right')}
           >
@@ -93,30 +92,28 @@ class StickerTool extends Component {
               src={arrowIcon}
             />
           </div>
-          <div 
-            ref={(scrollEl) => this.categoryScrollEl = scrollEl}
+          <div
+            ref={(scrollEl) => { this.categoryScrollEl = scrollEl; }}
             className="StickerTool-category_list_overflow_wrapper"
           >
             <div className="StickerTool-category_list">
-              {Object.keys(this.state.stickers).map((stickerCategory) => {
-                return (
-                  <img
-                    key={stickerCategory}
-                    className="StickerTool-category_image"
-                    onClick={() => this.selectStickerCategory(stickerCategory)}
-                    src={CATEGORY_ICONS[`${stickerCategory}.png`]}
-                    alt="sticker"
-                  />
-                );
-              })}
+              {Object.keys(stickers).map(stickerCategory => (
+                <img
+                  key={stickerCategory}
+                  className="StickerTool-category_image"
+                  onClick={() => this.selectStickerCategory(stickerCategory)}
+                  src={CATEGORY_ICONS[`${stickerCategory}.png`]}
+                  alt="sticker"
+                />
+                ))}
             </div>
           </div>
         </div>
         <div className="StickerTool-sticker_list_wrapper">
           <div className="StickerTool-sticker_list">
-            {Object.values(this.state.stickers[this.state.activeCategory]).map((stickerSrc, idx) => (
+            {Object.values(stickers[this.state.activeCategory]).map((stickerSrc, idx) => (
               <img
-                key={idx}
+                key={`${this.state.activeCategory}-${idx}`} // eslint-disable-line
                 className="StickerTool-sticker_image"
                 onClick={this.onAddSticker}
                 src={stickerSrc}

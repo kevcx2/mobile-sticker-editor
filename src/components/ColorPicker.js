@@ -25,14 +25,14 @@ class ColorPicker extends Component {
       if (colorPickerBoundingRect.right > viewWidth) {
         const currLeft = parseInt(window.getComputedStyle(this.colorPicker).left, 10);
         this.colorPicker.style.left =
-          `${currLeft + (-1 * (colorPickerBoundingRect.right - viewWidth))}px`
+          `${currLeft + (-1 * (colorPickerBoundingRect.right - viewWidth))}px`;
       }
     }
   }
 
   showColorPicker = () => {
     if (!this.props.disabled) {
-      this.props.onOpen && this.props.onOpen();
+      if (this.props.onOpen) this.props.onOpen();
 
       this.setState({
         showColorPicker: true,
@@ -76,8 +76,8 @@ class ColorPicker extends Component {
           />
         </div>
         {this.state.showColorPicker ? (
-          <div 
-            ref={colorPicker => this.colorPicker = colorPicker}
+          <div
+            ref={(colorPicker) => { this.colorPicker = colorPicker; }}
             className="ColorPicker-color_picker"
           >
             <div className="ColorPicker-color_picker_cover" onClick={this.closeColorPicker} />

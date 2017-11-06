@@ -8,30 +8,30 @@ class FontDropdown extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('click', this.onWindowClick)
+    window.addEventListener('click', this.onWindowClick);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('click', this.onWindowClick)
+    window.removeEventListener('click', this.onWindowClick);
   }
 
   onWindowClick = (evt) => {
     if (evt.target === this.dropdownToggle || evt.target.parentElement === this.dropdownToggle) {
-      return
+      return;
     }
     if (evt.target === this.dropdownMenu || evt.target.parentElement === this.dropdownMenu) {
-      return
+      return;
     }
 
     this.setState({
       isOpen: false,
-    })
+    });
   }
 
   toggleDropdown = () => {
     if (!this.state.isOpen && this.props.disabled) return;
     this.setState({
-      isOpen: !this.state.isOpen
+      isOpen: !this.state.isOpen,
     });
   }
 
@@ -41,34 +41,32 @@ class FontDropdown extends Component {
     return (
       <div className="FontDropdown">
         <div
-          ref={(dropdownToggle) => this.dropdownToggle = dropdownToggle}
-          className={"FontDropdown-dropdown_selection" + disabledClass}
+          ref={(dropdownToggle) => { this.dropdownToggle = dropdownToggle; }}
+          className={`FontDropdown-dropdown_selection${disabledClass}`}
           onClick={this.toggleDropdown}
         >
           <div
             className="FontDropdown-dropdown_selection_value"
-            style={{fontFamily: this.props.currentSelection.value}}
+            style={{ fontFamily: this.props.currentSelection.value }}
           >
             {this.props.currentSelection.label}
           </div>
-          <span className={"FontDropdown-dropdown_selection_arrow" + dropdownOpenClass}></span>
+          <span className={`FontDropdown-dropdown_selection_arrow${dropdownOpenClass}`} />
         </div>
         <div
-          ref={(dropdownMenu) => this.dropdownMenu = dropdownMenu}
-          className={"FontDropdown-dropdown" + dropdownOpenClass}
+          ref={(dropdownMenu) => { this.dropdownMenu = dropdownMenu; }}
+          className={`FontDropdown-dropdown${dropdownOpenClass}`}
         >
-          {this.props.options.map((option) => {
-            return (
-              <div
-                className="FontDropdown-dropdown_option"
-                key={option.value}
-                style={{fontFamily: option.value}}
-                onClick={() => this.props.onChange(option.value)}
-              >
-                {option.label}
-              </div>
-            );
-          })}
+          {this.props.options.map(option => (
+            <div
+              className="FontDropdown-dropdown_option"
+              key={option.value}
+              style={{ fontFamily: option.value }}
+              onClick={() => this.props.onChange(option.value)}
+            >
+              {option.label}
+            </div>
+            ))}
         </div>
       </div>
     );

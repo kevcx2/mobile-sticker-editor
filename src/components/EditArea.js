@@ -20,9 +20,9 @@ class EditArea extends Component {
     setFabricCanvas(new fabric.Canvas('filter'));
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate(nextProps) {
     if (nextProps.width !== this.props.width) {
-      const newSizing = this.getCanvasSizing(nextProps.width)
+      const newSizing = this.getCanvasSizing(nextProps.width);
       const canvas = getCanvas();
       canvas.setWidth(newSizing.width);
       canvas.setHeight(newSizing.height);
@@ -41,7 +41,7 @@ class EditArea extends Component {
   }
 
   getCanvasSizing(width) {
-    const canvasWidth = .875 * width;
+    const canvasWidth = 0.875 * width;
     const canvasHeight = (canvasWidth * BASE_CANVAS_HEIGHT) / BASE_CANVAS_WIDTH;
     const sizingData = {
       width: canvasWidth,
@@ -69,12 +69,12 @@ class EditArea extends Component {
     const visibilityClass = this.state.phoneSvgLoaded ? 'EditArea-visible' : 'EditArea-hidden';
 
     return (
-      <div className={"EditArea " + visibilityClass} style={{width: this.props.width}}>
-        <img onLoad={() => this.setState({phoneSvgLoaded: true})} src={phoneSvg}></img>
-        <div 
+      <div className={`EditArea ${visibilityClass}`} style={{ width: this.props.width }}>
+        <img onLoad={() => this.setState({ phoneSvgLoaded: true })} src={phoneSvg} />
+        <div
           className="EditArea-canvas_shadow"
-          style={{width: canvasSizing.width, height: canvasSizing.height}}
-        ></div>
+          style={{ width: canvasSizing.width, height: canvasSizing.height }}
+        />
         <div className="EditArea-canvas_container">
           <StaticCanvas width={canvasSizing.width} height={canvasSizing.height} />
           {getCanvas() ? (
