@@ -9,7 +9,7 @@ import SaveButton from './SaveButton';
 
 import './ToolArea.css';
 
-const ToolArea = () => {
+const ToolArea = (props) => {
   if (!getCanvas()) return null;
   return (
     <div className="ToolArea">
@@ -17,7 +17,7 @@ const ToolArea = () => {
       <ShadowTool />
       <StickerTool />
       <ImageUploadTool />
-      <SaveButton />
+      <SaveButton onSave={props.onSave}/>
     </div>
   );
 };

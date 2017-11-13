@@ -1,14 +1,16 @@
+.PopEditor {
+  position: relative;
+}
 
-
-.App-small_sticker_container {
+.PopEditor-small_sticker_container {
   display: none;
 }
 
-.SmallLayout .App-small_sticker_container {
+.SmallLayout .PopEditor-small_sticker_container {
   display: initial;
 }
 
-.App-small_sticker_container {
+.PopEditor-small_sticker_container {
   position: absolute;
   right: 0px;
   top: 14px;
@@ -21,10 +23,10 @@
   background-color: white;
 }
 
-.ExSmallLayout .App-small_sticker_container {
+.ExSmallLayout .PopEditor-small_sticker_container {
   width: 125px;
 }
 
-.SmallLayout .App-small_sticker_container .StickerTool {
+.SmallLayout .PopEditor-small_sticker_container .StickerTool {
   display: initial;
 }
