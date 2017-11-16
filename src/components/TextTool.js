@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 
-import { getCanvas, addTextToCanvas, applyTextStyle, hexToRgbA } from '../canvas';
+import {
+  getCanvas,
+  addTextToCanvas,
+  applyTextStyle,
+  applyTextTexture,
+  hexToRgbA
+} from '../canvas';
 import ColorPicker from './ColorPicker';
+import GlitterPicker from './GlitterPicker';
 import EditorButton from './EditorButton';
 import ToolHeader from './ToolHeader';
 import FontDropdown from './FontDropdown';
@@ -13,6 +20,7 @@ const TEXT_DEFAULTS = {
   hasSelection: false,
   color: 'rgba(0,0,0,1)',
   fontFamily: Object.keys(FONTS)[0],
+  glitterType: 'none',
 };
 
 class TextTool extends Component {
@@ -31,17 +39,44 @@ class TextTool extends Component {
   }
 
   onTextSelected = (evt) => {
-    // Text color can be hex - converts to rgba if appropriate.
+    const textObj = evt.target;
+    let textColor;
+
+    if (typeof textObj.fill === 'string' || textObj.fill instanceof String) {
+      textColor = textObj.fill
+      // At this point we know the fill is a color string and there is no glitter on the selection
+      this.setState({
+        glitterType: 'none',
+      });
+    } else {
+      // If the text has a texture applied, we need to use the saved pre-texture color if it
+      // exists, or default to black.
+      if (textObj.popEditorData && textObj.popEditorData.untexturedColor) {
+        textColor = textObj.popEditorData.untexturedColor;
+      } else {
+        textColor = '#000000';
+      }
+
+      // If we are here it means there is a texture currently applied to the text.
+      // Save what it is in local state so we can indicate that a texture is applied
+      // in the glitterpicker tool.
+      this.setState({
+        glitterType: textObj.fill.source.id,
+      });
+    }
+
     this.setState({
       hasSelection: true,
-      color: hexToRgbA(evt.target.fill),
-      fontFamily: evt.target.fontFamily,
+      // Text color can be hex - converts to rgba if appropriate.
+      color: hexToRgbA(textColor),
+      fontFamily: textObj.fontFamily,
     });
   }
 
   onColorChange = (color) => {
     this.setState({
       color,
+      glitterType: 'none',
     }, () => applyTextStyle({
       color,
     }));
@@ -53,6 +88,12 @@ class TextTool extends Component {
     }, () => applyTextStyle({
       fontFamily,
     }));
+  }
+
+  onGlitterChange = (glitterType) => {
+    this.setState({
+      glitterType,
+    }, () => applyTextTexture(glitterType));
   }
 
   restoreDefaults = () => {
@@ -90,12 +131,17 @@ class TextTool extends Component {
         </EditorButton>
         <ToolHeader>Typeface</ToolHeader>
         {this.renderFontDropdown()}
-        <ToolHeader>Text Color</ToolHeader>
-        <div className="TextTool-color_container">
+        <ToolHeader>Text Effects</ToolHeader>
+        <div className="TextTool-effects_container">
           <ColorPicker
             color={this.state.color}
             onChange={this.onColorChange}
             disabled={!this.state.hasSelection}
+          />
+          <GlitterPicker
+            disabled={!this.state.hasSelection}
+            glitterType={this.state.glitterType}
+            onChange={this.onGlitterChange}
           />
         </div>
       </div>

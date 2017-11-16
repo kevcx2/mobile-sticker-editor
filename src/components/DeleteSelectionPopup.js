@@ -152,7 +152,7 @@ class DeleteSelectionPopup extends Component {
         className={`DeleteSelectionPopup${visibilityClass}`}
         style={this.state.popupStyle}
       >
-        <img width={ICON_WIDTH} height={POPUP_HEIGHT} src={trashIcon} alt="delete" />
+        <img width={ICON_WIDTH} height={POPUP_HEIGHT} src={trashIcon} />
       </div>
     );
   }

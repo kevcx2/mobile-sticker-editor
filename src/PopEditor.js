@@ -7,9 +7,6 @@ import StickerTool from './components/StickerTool';
 
 import './PopEditor.css';
 
-const filterSlug = 'christmas_family';
-// const filterSlug = 'pool_party';
-
 const EXTRA_SMALL_LAYOUT_BREAKPOINT = 475;
 const SMALL_LAYOUT_BREAKPOINT = 625;
 const LARGE_LAYOUT_EDITOR_WIDTH = 320;
@@ -50,7 +47,7 @@ class PopEditor extends Component {
     const layoutClass = (isSmallLayout ? 'SmallLayout ' : '') + (isExSmallLayout ? 'ExSmallLayout' : '');
 
     // Positioning login gets a little messy... unfortunately its what is needed to accomodate
-    // the large differences in desktop and mobile design. One hing to note is that there are two
+    // the large differences in desktop and mobile design. One thing to note is that there are two
     // copies of the sticker tool, one in the ToolArea, and one rendered here. The one in the
     // tool area will be shown on large screen layouts, and the one here will be shown on small
     // screen layouts.

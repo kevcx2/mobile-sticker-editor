@@ -1,5 +1,6 @@
 .ColorPicker-color_picker_container {
-    position: relative;
+  position: relative;
+  float: left;
 }
 
 .ColorPicker-color_preview_container {

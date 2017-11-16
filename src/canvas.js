@@ -3,6 +3,15 @@
 // provides helpers for interacting with it in response to UI actions.
 import { fabric } from 'fabric';
 
+import goldTexture from './img/textures/gold.jpg';
+import silverTexture from './img/textures/silver.jpg';
+
+const TEXT_TEXTURES = {
+  gold: goldTexture,
+  silver: silverTexture,
+}
+const NO_TEXTURE = 'none';
+
 let canvas;// eslint-disable-line
 let canvasInitializedCallbacks = [];// eslint-disable-line
 
@@ -150,6 +159,51 @@ export const applyTextStyle = (style) => {
     setTextStyle(currentSelectionObject, style);
   }
 };
+
+const setTextTexture = (object, texture) => {
+  // Remove the current texture - reset color back to the previous
+  // color if we have it saved.
+  if (texture === NO_TEXTURE) {
+    if (object.popEditorData && object.popEditorData.untexturedColor) {
+      object.set('fill', object.popEditorData.untexturedColor);
+    } else {
+      object.set('fill', '#000000');
+    }
+    canvas.renderAll();
+  }
+
+  // Add a custom property on the fabric object to store the
+  // old color under a popEditorData namespace.
+  if (!object.popEditorData) object.popEditorData = {};
+  if (typeof object.fill === 'string' || object.fill instanceof String) {
+    object.popEditorData.untexturedColor = object.fill;
+  }
+
+  const textureSrc = TEXT_TEXTURES[texture];
+  if (!textureSrc) return;
+
+  fabric.util.loadImage(textureSrc, (img) => {
+    img.id = texture;
+    object.set('fill', new fabric.Pattern({
+      source: img,
+      repeat: 'repeat',
+    }));
+    canvas.renderAll();
+  });
+} 
+
+export const applyTextTexture = (texture) => {
+  const currentSelectionGroup = canvas.getActiveGroup();
+  const currentSelectionObject = canvas.getActiveObject();
+
+  if (currentSelectionGroup) {
+    currentSelectionGroup.objectCaching = false;
+    const groupSelectionObjects = currentSelectionGroup.getObjects();
+    groupSelectionObjects.forEach(object => setTextTexture(object, texture));
+  } else if (currentSelectionObject) {
+    setTextTexture(currentSelectionObject, texture);
+  }
+}
 
 export const addSvgStickerToCanvas = (imgEl) => {
   canvas.discardActiveGroup();

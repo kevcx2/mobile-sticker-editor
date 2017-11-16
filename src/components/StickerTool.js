@@ -103,7 +103,6 @@ class StickerTool extends Component {
                   className="StickerTool-category_image"
                   onClick={() => this.selectStickerCategory(stickerCategory)}
                   src={CATEGORY_ICONS[`${stickerCategory}.png`]}
-                  alt="sticker"
                 />
                 ))}
             </div>
@@ -117,7 +116,6 @@ class StickerTool extends Component {
                 className="StickerTool-sticker_image"
                 onClick={this.onAddSticker}
                 src={stickerSrc}
-                alt="sticker"
               />
             ))}
           </div>

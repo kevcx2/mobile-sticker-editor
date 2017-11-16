@@ -57,7 +57,8 @@
   cursor: initial;
 }
 
-.TextTool-color_container {
+.TextTool-effects_container {
+  height: 46px;
   margin-left: 12px;
 }
 
@@ -68,7 +69,7 @@
   left: -5px;
 }
 
-.SmallLayout .TextTool-color_container {
+.SmallLayout .TextTool-effects_container {
   display: inline-block;
   margin-top: 8px;
 }

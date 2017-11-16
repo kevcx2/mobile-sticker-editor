@@ -32,7 +32,9 @@ class EditArea extends Component {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.filter && this.props.filter) {
-      setTimeout(() => loadCanvasJson(this.props.filter, this.onUpdateCanvasJSON), 500);
+      // HACK: wait 1 second to load in the canvas json to allow time for the browser to load in
+      // the font files first.
+      setTimeout(() => loadCanvasJson(this.props.filter, this.onUpdateCanvasJSON), 1000);
     }
   }
 
