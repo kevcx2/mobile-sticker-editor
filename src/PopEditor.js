@@ -25,7 +25,7 @@ class PopEditor extends Component {
   componentDidMount() {
     this.updateSize();
     window.addEventListener('resize', this.updateSize);
-  };
+  }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateSize);
@@ -54,7 +54,7 @@ class PopEditor extends Component {
     return (
       <div
         ref={(editorEl) => { this.editorEl = editorEl; }}
-        className={'PopEditor ' + layoutClass}
+        className={`PopEditor ${layoutClass}`}
       >
         <EditArea
           width={editWidth}
@@ -66,7 +66,7 @@ class PopEditor extends Component {
         >
           <StickerTool smallLayout />
         </div>
-        <ToolArea onSave={this.props.onSave}/>
+        <ToolArea onSave={this.props.onSave} />
       </div>
     );
   }

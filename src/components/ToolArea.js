@@ -17,7 +17,7 @@ const ToolArea = (props) => {
       <ShadowTool />
       <StickerTool />
       <ImageUploadTool />
-      <SaveButton onSave={props.onSave}/>
+      <SaveButton onSave={props.onSave} />
     </div>
   );
 };

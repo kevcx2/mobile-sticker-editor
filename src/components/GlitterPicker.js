@@ -54,36 +54,33 @@ class GlitterPicker extends Component {
       this.props.glitterType ? ` GlitterPicker-${this.props.glitterType}` : '';
 
     return (
-      <div className={"GlitterPicker-container" + disabledClass}>
-        <div onClick={this.onGlitterOpen} className={"GlitterPicker-button" + glitterColorClass}>
+      <div className={`GlitterPicker-container${disabledClass}`}>
+        <div onClick={this.onGlitterOpen} className={`GlitterPicker-button${glitterColorClass}`}>
           T
         </div>
         <div className={menuVisibilityClass}>
           <div
-            onClick={() => this.setState({showGlitterPicker: false})}
+            onClick={() => this.setState({ showGlitterPicker: false })}
             className="GlitterPicker-menu_cover"
-          ></div>
+          />
           <div
-            ref={(glitterPicker) => {this.glitterPicker = glitterPicker; }}
+            ref={(glitterPicker) => { this.glitterPicker = glitterPicker; }}
             className="GlitterPicker-menu"
           >
             <div
-              style={{backgroundImage: `url("${goldTexture}")`}}
+              style={{ backgroundImage: `url("${goldTexture}")` }}
               className="GlitterPicker-menu_option"
-              onClick={() => {this.onGlitterSelection(GOLD_TEXTURE)}}
-            >
-            </div>
+              onClick={() => { this.onGlitterSelection(GOLD_TEXTURE); }}
+            />
             <div
-              style={{backgroundImage: `url("${silverTexture}")`}}
+              style={{ backgroundImage: `url("${silverTexture}")` }}
               className="GlitterPicker-menu_option"
-              onClick={() => {this.onGlitterSelection(SILVER_TEXTURE)}}
-            >
-            </div>
+              onClick={() => { this.onGlitterSelection(SILVER_TEXTURE); }}
+            />
             <div
               className="GlitterPicker-menu_option"
-              onClick={() => {this.onGlitterSelection(NO_TEXTURE)}}
-            >
-            </div>
+              onClick={() => { this.onGlitterSelection(NO_TEXTURE); }}
+            />
           </div>
         </div>
       </div>

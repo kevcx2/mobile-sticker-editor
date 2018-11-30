@@ -5,7 +5,7 @@ import {
   addTextToCanvas,
   applyTextStyle,
   applyTextTexture,
-  hexToRgbA
+  hexToRgbA,
 } from '../canvas';
 import ColorPicker from './ColorPicker';
 import GlitterPicker from './GlitterPicker';
@@ -43,7 +43,7 @@ class TextTool extends Component {
     let textColor;
 
     if (typeof textObj.fill === 'string' || textObj.fill instanceof String) {
-      textColor = textObj.fill
+      textColor = textObj.fill;
       // At this point we know the fill is a color string and there is no glitter on the selection
       this.setState({
         glitterType: 'none',

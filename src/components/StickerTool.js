@@ -55,7 +55,7 @@ class StickerTool extends Component {
 
   scrollCategories = (direction) => {
     let newScrollPos = 0;
-    let currScrollLeft = this.categoryScrollEl.scrollLeft || 0;
+    const currScrollLeft = this.categoryScrollEl.scrollLeft || 0;
     if (direction === 'left') {
       CATEGORY_SCROLL_POSITIONS.sort((a, b) => b - a);
       newScrollPos = CATEGORY_SCROLL_POSITIONS.find(scrollPos => (scrollPos < currScrollLeft));
@@ -64,7 +64,7 @@ class StickerTool extends Component {
       newScrollPos = CATEGORY_SCROLL_POSITIONS.find(scrollPos => (scrollPos > currScrollLeft));
     }
 
-    currScrollLeft = newScrollPos === undefined ? currScrollLeft : newScrollPos;
+    this.categoryScrollEl.scrollLeft = newScrollPos === undefined ? currScrollLeft : newScrollPos;
   }
 
   render() {

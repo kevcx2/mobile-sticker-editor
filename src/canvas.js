@@ -9,7 +9,7 @@ import silverTexture from './img/textures/silver.jpg';
 const TEXT_TEXTURES = {
   gold: goldTexture,
   silver: silverTexture,
-}
+};
 const NO_TEXTURE = 'none';
 
 let canvas;// eslint-disable-line
@@ -190,7 +190,7 @@ const setTextTexture = (object, texture) => {
     }));
     canvas.renderAll();
   });
-} 
+};
 
 export const applyTextTexture = (texture) => {
   const currentSelectionGroup = canvas.getActiveGroup();
@@ -203,7 +203,7 @@ export const applyTextTexture = (texture) => {
   } else if (currentSelectionObject) {
     setTextTexture(currentSelectionObject, texture);
   }
-}
+};
 
 export const addSvgStickerToCanvas = (imgEl) => {
   canvas.discardActiveGroup();

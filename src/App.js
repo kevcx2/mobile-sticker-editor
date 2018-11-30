@@ -15,20 +15,20 @@ const onSave = (filterJSON, filterDataUrl) => {
 
   demoImg.onclick = () => { document.body.removeChild(demoImg); };
   document.body.appendChild(demoImg);
-}
+};
 
 class App extends Component {
   state = {
-    filterJSON: undefined
+    filterJSON: undefined,
   }
 
   constructor(props) {
     super(props);
-    this.getFilterJSON()
+    this.getFilterJSON();
   }
 
   getFilterJSON = () => {
-    const filterSlug = "pool_party";
+    const filterSlug = 'pool_party';
 
     const parseFilterResponse = (response) => {
       this.setState({
@@ -42,13 +42,16 @@ class App extends Component {
       .then(json => parseFilterResponse(json));
   }
 
-  render(){
+  render() {
     return (
-    <div style={{width: '100%'}}>
-      <div style={{width: '80%', maxWidth: 625, minWidth: 375, margin: '0 auto'}}>
-        <PopEditor filterJSON={this.state.filterJSON} onSave={onSave}/>
+      <div style={{ width: '100%' }}>
+        <div style={{
+ width: '80%', maxWidth: 625, minWidth: 375, margin: '0 auto',
+}}
+        >
+          <PopEditor filterJSON={this.state.filterJSON} onSave={onSave} />
+        </div>
       </div>
-    </div>
     );
   }
 }
