@@ -24,22 +24,9 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.getFilterJSON();
-  }
-
-  getFilterJSON = () => {
-    const filterSlug = 'pool_party';
-
-    const parseFilterResponse = (response) => {
-      this.setState({
-        filterJSON: response.design_json,
-      });
-    };
-
-    fetch(`https://www.dev.filterpop.com/api/design/${filterSlug}`, {
-      method: 'get',
-    }).then(response => response.json())
-      .then(json => parseFilterResponse(json));
+    this.setState({
+      filterJSON: {},
+    });
   }
 
   render() {
